@@ -1,11 +1,6 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
+import type { ActionFunction } from '@remix-run/server-runtime'
 import crypto from 'crypto'
 import { json } from '@remix-run/server-runtime'
-
-export const loader: LoaderFunction = async ({ request }) => {
-  console.log({ request })
-  return json({ name: 'kory' })
-}
 
 // mostly taken from https://remix.run/docs/en/v1/guides/resource-routes#webhooks
 export const action: ActionFunction = async ({ request }) => {
