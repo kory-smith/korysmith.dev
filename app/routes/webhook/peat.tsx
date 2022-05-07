@@ -6,6 +6,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 	return json({name: "kory"})
 }
 
+// mostly taken from https://remix.run/docs/en/v1/guides/resource-routes#webhooks
 export const action: ActionFunction = async ({request}) => {
   if (request.method !== "POST") {
     return json({ message: "Method not allowed" }, 405);
@@ -24,7 +25,31 @@ export const action: ActionFunction = async ({request}) => {
 			if (signature !== generatedSignature) {
 				return json({ message: "Signature mismatch" }, 401);
 			}
-			// Do webhook stuff here
-			return json({success: true}, 200)
+
+				const myHeaders = new Headers()
+        myHeaders.append('Accept', 'application/vnd.github.v3+json')
+        myHeaders.append(
+          'Authorization',
+          `Bearer ${process.env.GITHUB_TOKEN}`,
+        )
+        myHeaders.append('Content-Type', 'application/json')
+
+        const body = JSON.stringify({
+          event_type: 'Automatic trigger from korysmith.dev webhook',
+        })
+
+        const requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body
+        }
+
+       const response = await fetch(
+          'https://api.github.com/repos/kory-smith/peat/dispatches',
+          requestOptions,
+        )
+				if (response.status === 204) {
+					return json({success: true}, 200)
+				} else return json({success: false}, 401)
 		}
 }
