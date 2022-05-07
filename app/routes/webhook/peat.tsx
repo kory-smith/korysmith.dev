@@ -14,13 +14,13 @@ export const action: ActionFunction = async ({request}) => {
 
 	  /* Validate the webhook */
 		const signature = request.headers.get(
-			"X-Hub-Signature-256"
+			"x-todoist-hmac-sha256"
 		);
-		if (process.env.GITHUB_WEBHOOK_SECRET) {
-			const generatedSignature = `sha256=${crypto
-				.createHmac("sha256", process.env.GITHUB_WEBHOOK_SECRET)
+		if (process.env.TODOIST_CLIENT_SECRET) {
+			const generatedSignature = crypto
+				.createHmac("sha256", process.env.TODOIST_CLIENT_SECRET)
 				.update(JSON.stringify(payload))
-				.digest("hex")}`;
+				.digest("base64");
 			if (signature !== generatedSignature) {
 				return json({ message: "Signature mismatch" }, 401);
 			}
