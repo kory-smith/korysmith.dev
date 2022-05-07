@@ -1,4 +1,5 @@
-import { LoaderFunction } from '@remix-run/server-runtime'
+import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
+import crypto from "crypto"
 import { json } from '@remix-run/server-runtime'
 
 export const loader: LoaderFunction = async ({ request }) => {
