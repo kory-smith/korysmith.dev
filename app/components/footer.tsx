@@ -20,13 +20,13 @@ export default function Footer() {
             Remix Blog
           </h3>
           <ul className='flex items-center justify-center gap-6'>
-            <Link href='https://github.com/remix-run/remix'>
+            <Link href='https://github.com/kory-smith'>
               <Svg>
                 <use href={`${GitHubSvg}#icon-github`} />
               </Svg>
               <span className='sr-only'>GitHub</span>
             </Link>
-            <Link href='https://twitter.com/remix_run'>
+            <Link href='https://twitter.com/Kor54E/'>
               <Svg>
                 <use href={`${TwitterSvg}#icon-twitter`} />
               </Svg>
