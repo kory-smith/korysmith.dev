@@ -48,8 +48,8 @@ export default function Index() {
       <section className='mx-auto max-w-4xl'>
         <div className='grid h-[calc(100vh-92px)] place-content-center'>
           <h1 className='flex flex-col items-center p-4'>
-            <GradientText>Remix</GradientText>
-            <GradientText>Blog</GradientText>
+            <GradientText>Kory's dev site</GradientText>
+            <GradientText>(Currently under construction)</GradientText>
           </h1>
         </div>
       </section>
