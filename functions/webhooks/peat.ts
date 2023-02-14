@@ -38,7 +38,7 @@ export async function onRequestPost({ request, env }) {
     );
     if (response.status === 204) {
       return new Response("succeeded", { status: 200 });
-    } else return Response.error();
+    } else return new Response(response.statusText, { status: response.status })
   } else {
     return new Response("Todoist secret not set", { status: 500 });
   }
