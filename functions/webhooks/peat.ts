@@ -1,9 +1,12 @@
 export async function onRequestPost({ request, env }) {
   const todoistSecret = env.TODOIST_CLIENT_SECRET;
+  console.log("Got request", { request })
+  console.log("Do I have Todoist secret?", { todoistSecret })
   if (todoistSecret) {
     const payload = await request.text();
+    console.log({ payload })
     const expectedHmac = request.headers.get("x-todoist-hmac-sha256");
-
+    console.log({ expectedHmac })
     const encoder = new TextEncoder();
     const data = encoder.encode(payload);
     const key = await crypto.subtle.importKey(
@@ -16,8 +19,10 @@ export async function onRequestPost({ request, env }) {
     const hmac = await crypto.subtle.sign("HMAC", key, data);
     const digest = String.fromCharCode(...new Uint8Array(hmac));
     if (digest !== expectedHmac) {
+      console.log("Signature doesn't match")
       return new Response("Signature mismatch", { status: 401 });
     }
+    console.log("Signature matches, triggering build")
     const myHeaders = new Headers();
     myHeaders.append("Accept", "application/vnd.github.v3+json");
     myHeaders.append("Authorization", `Bearer ${env.GITHUB_TOKEN}`);
