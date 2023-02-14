@@ -1,4 +1,4 @@
-export async function onPostRequest({ request, env }) {
+export async function onRequestPost({ request, env }) {
   const todoistSecret = env.TODOIST_CLIENT_SECRET;
   if (todoistSecret) {
     const payload = await request.text();
