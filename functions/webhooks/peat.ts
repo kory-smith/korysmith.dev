@@ -22,6 +22,7 @@ export async function onRequestPost({ request, env }) {
     myHeaders.append("Accept", "application/vnd.github.v3+json");
     myHeaders.append("Authorization", `Bearer ${env.GITHUB_TOKEN}`);
     myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("User-Agent", "korysmith.dev")
 
     const body = JSON.stringify({
       event_type: "Automatic trigger from korysmith.dev webhook",
