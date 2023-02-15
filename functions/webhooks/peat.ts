@@ -32,6 +32,7 @@ export async function onRequestPost({ request, env }) {
       headers: myHeaders,
       body,
     };
+    console.log("Attempting to dispatch peat workflow")
     const peatDispatch = await fetch(
       "https://api.github.com/repos/kory-smith/peat/dispatches",
       requestOptions
