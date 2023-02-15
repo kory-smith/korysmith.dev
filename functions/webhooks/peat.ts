@@ -16,7 +16,7 @@ export async function onRequestPost({ request, env }) {
       ["sign"]
     );
     const hmac = await crypto.subtle.sign("HMAC", key, data);
-    const digest = String.fromCharCode(...new Uint8Array(hmac));
+    const digest = btoa(String.fromCharCode(...new Uint8Array(hmac)));
     console.log({ digest });
     if (digest !== expectedHmac) {
       console.log("Signature doesn't match");
