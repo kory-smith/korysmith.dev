@@ -1,11 +1,8 @@
 export async function onRequestPost({ request, env }) {
   const todoistSecret = env.TODOIST_CLIENT_SECRET;
-  console.log("Got request", { request });
   if (todoistSecret) {
     const payload = await request.text();
-    console.log({ payload });
     const expectedHmac = request.headers.get("x-todoist-hmac-sha256");
-    console.log({ expectedHmac });
     const encoder = new TextEncoder();
     const data = encoder.encode(payload);
     const key = await crypto.subtle.importKey(
@@ -16,13 +13,11 @@ export async function onRequestPost({ request, env }) {
       ["sign"]
     );
     const hmac = await crypto.subtle.sign("HMAC", key, data);
-    const digest = btoa(String.fromCharCode(...new Uint8Array(hmac)));
-    console.log({ digest });
-    if (digest !== expectedHmac) {
+    const generatedHmac = btoa(String.fromCharCode(...new Uint8Array(hmac)));
+    if (generatedHmac !== expectedHmac) {
       console.log("Signature doesn't match");
       return new Response("Signature mismatch", { status: 401 });
     }
-    console.log("Signature matches, triggering build");
     const myHeaders = new Headers();
     myHeaders.append("Accept", "application/vnd.github.v3+json");
     myHeaders.append("Authorization", `Bearer ${env.GITHUB_TOKEN}`);
@@ -37,14 +32,17 @@ export async function onRequestPost({ request, env }) {
       headers: myHeaders,
       body,
     };
-    const response = await fetch(
+    const peatDispatch = await fetch(
       "https://api.github.com/repos/kory-smith/peat/dispatches",
       requestOptions
     );
-    if (response.status === 204) {
+    console.log({ peatDispatch });
+    if (peatDispatch.status === 204) {
       return new Response("succeeded", { status: 200 });
     } else
-      return new Response(response.statusText, { status: response.status });
+      return new Response(peatDispatch.statusText, {
+        status: peatDispatch.status,
+      });
   } else {
     return new Response("Todoist secret not set", { status: 500 });
   }
