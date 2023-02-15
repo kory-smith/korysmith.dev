@@ -38,6 +38,7 @@ export async function onRequestPost({ request, env }) {
       requestOptions
     );
     console.log({ peatDispatch });
+    console.log({ responseText: await peatDispatch.text() });
     if (peatDispatch.status === 204) {
       return new Response("succeeded", { status: 200 });
     } else
