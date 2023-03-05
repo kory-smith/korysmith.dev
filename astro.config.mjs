@@ -10,5 +10,9 @@ export default defineConfig({
   adapter: cloudflare({
     mode: "directory",
   }),
-  integrations: [tailwind()],
+  integrations: [
+    tailwind({
+      config: { applyBaseStyles: false },
+    }),
+  ],
 });

@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "iA Writer Mono S";
+  src: url("../iAWriterMonoS.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+/* Set my default font  */
+  html {
+    font-family: "iA Writer Mono S", "Courier New", "monospace";
+  }
+}
