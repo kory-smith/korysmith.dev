@@ -1,19 +1,8 @@
 ---
-import "../base.css";
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 export const prerender = true;
-
-import Navigation from "../components/Navigation.astro";
 ---
 
-<head>
-	<meta charset="utf-8" />
-	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<meta name="viewport" content="width=device-width" />
-	<meta name="generator" content={Astro.generator} />
-	<title>Kory Smith</title>
-</head>
-	<Navigation />
-	<body>
-		<h1>Blog page</h1>
-	</body>
+<BaseLayout title="Blog" description="All of Kory's blog posts">
+  <h1>Blog page</h1>
+</BaseLayout>
