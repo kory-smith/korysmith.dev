@@ -17,7 +17,7 @@
   h2 {
     @apply text-xl;
   }
-  html {
+  body {
     /* Set my default font  */
     font-family: "iA Writer Mono S", "Courier New", "monospace";
     background-color: #f9f9f9;
