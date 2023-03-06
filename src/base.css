@@ -7,7 +7,7 @@
   src: url("../iAWriterMonoS.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-	font-display: optional;
+  font-display: optional;
 }
 
 @layer base {
@@ -17,8 +17,15 @@
   h2 {
     @apply text-xl;
   }
-/* Set my default font  */
   html {
+    /* Set my default font  */
     font-family: "iA Writer Mono S", "Courier New", "monospace";
+    background-color: #f9f9f9;
   }
+}
+
+nav ul {
+  text-decoration: underline;
+  text-decoration-color: rgb(254, 135, 29);
+  text-decoration-thickness: 2px;
 }
