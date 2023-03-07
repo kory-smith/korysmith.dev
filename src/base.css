@@ -4,8 +4,8 @@
 
 @font-face {
   font-family: "iA Writer Mono S";
-  src: url("../iAWriterMonoS.woff2") format("woff2"),
-    url("../iAWriterMonoS.woff") format("woff");
+  src: url("../iAWriterMonoS-subset.woff2") format("woff2"),
+    url("../iAWriterMonoS-subset.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: optional;

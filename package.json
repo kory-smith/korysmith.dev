@@ -7,7 +7,9 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"astro": "astro"
+		"astro": "astro",
+		"//subsetFonts": "This is the manual command I use to subset the font until I can get subfont to work",
+		"subsetFonts": "glyphhanger https://korysmith.dev/ --spider --subset='./public/iAWriterMonoS.woff2' --formats=woff2,woff"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^6.1.3",
@@ -18,7 +20,6 @@
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20230214.0",
-		"@ernxst/subfont": "^0.1.4",
 		"glyphhanger": "^5.0.0",
 		"typescript": "^4.9.5"
 	}

@@ -1,7 +1,5 @@
 import { defineConfig } from "astro/config";
 
-import subfont from "@ernxst/subfont/astro";
-
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
@@ -19,7 +17,6 @@ export default defineConfig({
         applyBaseStyles: false,
       },
     }),
-    prefetch({ throttle: 3 }),
-    subfont(),
+    prefetch({ throttle: 3 })
   ],
 });
