@@ -1,0 +1,70 @@
+---
+const page = await fetch(
+  // For now this is a hardcoded page
+  "https://api.notion.com/v1/blocks/ee35c526-309c-45cb-bbc1-db4e778ef10f/children?page_size=50",
+  {
+    method: "GET",
+    headers: {
+      "Notion-Version": "2022-02-22",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${import.meta.env.NOTION_SECRET}`,
+    },
+  }
+).then(res => res.json());
+
+function renderBlock(block) {
+  const blockType = block.type;
+  switch (blockType) {
+    case "paragraph":
+      return block.paragraph.rich_text.map(text => {
+        return `<p>${text.text.content}</p>`
+      }).join("");
+    case "heading_1":
+      return `<h1>${block.heading_1.text[0].text.content}</h1>`;
+    case "heading_2":
+      return `<h2>${block.heading_2.text[0].text.content}</h2>`;
+    case "heading_3":
+      return `<h3>${block.heading_3.text[0].text.content}</h3>`;
+    case "bulleted_list_item":
+      return block.bulleted_list_item.text.map(text => {
+        return `<li>${text.text.content}</li>`
+      }).join("");
+    case "numbered_list_item":
+      return block.numbered_list_item.text.map(text => {
+        return `<li>${text.text.content}</li>`
+      }).join("");
+    case "to_do":
+      const checked = block.to_do.checked;
+      const content = block.to_do.text[0].text.content;
+      return `<div><input type="checkbox" ${checked ? "checked" : ""} disabled>${content}</div>`;
+    case "toggle":
+      return `
+        <details>
+          <summary>${block.toggle.text[0].text.content}</summary>
+          ${block.toggle.children.map(child => renderBlock(child)).join("")}
+        </details>
+      `;
+    case "quote":
+      return `<blockquote>${block.quote.rich_text[0].text.content}</blockquote>`;
+    case "code":
+      return `<pre><code>${block.code.text[0].text.content}</code></pre>`;
+    case "embed":
+      return block.embed.html;
+    case "image":
+      return `<img src="${block.image.file.url}">`;
+    default:
+      return "";
+  }
+}
+
+const text = page.results.map((block) => renderBlock(block)).join("")
+
+
+export function getStaticPaths() {
+  return [{ params: { article: "whats-encryption" } }];
+}
+
+export const prerender = true;
+---
+
+<h1 set:html={text}></h1>
