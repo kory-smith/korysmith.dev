@@ -19,4 +19,7 @@ export default defineConfig({
     }),
     prefetch({ throttle: 3 })
   ],
+  experimental: {
+    assets: true,
+  }
 });
