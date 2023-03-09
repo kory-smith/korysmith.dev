@@ -8,6 +8,7 @@ import type {
   BlockObjectResponse,
   ListBlockChildrenResponse,
   RichTextItemResponse,
+  PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 const notion = new Client({
@@ -15,6 +16,55 @@ const notion = new Client({
 });
 
 const ARTICLES_DATABASE_ID = "bf7e16c44b7b46a6ac4d11d5d4db77d8";
+
+// Get all the articles from the database where the status is "Published"
+const articles = await notion.databases.query({
+  database_id: ARTICLES_DATABASE_ID,
+  // filter: {
+  //   property: "Status",
+  //   select: {
+  //     equals: "Published",
+  //   },
+  // },
+});
+
+function convertToSlug(string: string) {
+  const slug = string
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/ /g, "-")
+    .toLowerCase();
+  return slug;
+}
+
+const massagedArticles = articles.results.map((article) => {
+  const articleAsPageObject = article as PageObjectResponse;
+  const title = articleAsPageObject.properties.Name.title[0].plain_text;
+  const slug = convertToSlug(title);
+  return {
+    id: articleAsPageObject.id,
+    title,
+    slug,
+    status: articleAsPageObject.properties.Status.select.name,
+    created: articleAsPageObject.properties["Created Time"].created_time,
+    lastEdited:
+      articleAsPageObject.properties["Last Edited Time"].last_edited_time,
+  };
+});
+
+// iterate through massagedArticles, get the children of each one, and make the html from those children into the "content" property
+const articlesWithContentPromises = massagedArticles.map(async (article) => {
+  const blocks = await notion.blocks.children.list({
+    block_id: article.id,
+  });
+  const html = notionBlocksToHtml(blocks);
+  return {
+    ...article,
+    content: html,
+  };
+});
+
+const articlesWithMarkdown = await Promise.all(articlesWithContentPromises);
 
 // I still need the title, created time, last edited time, and status
 // I also need to turn the title into
@@ -121,20 +171,63 @@ function notionRichTextToHtml(richText: RichTextItemResponse[]) {
       html += content;
     }
   });
-
   return html;
 }
 
-const html = notionBlocksToHtml(blocks);
+export async function getStaticPaths() {
+  // fetch all articles from the articles database
 
-export function getStaticPaths() {
-  return [{ params: { article: "sample-article" } }];
+  const ARTICLES_DATABASE_ID = "bf7e16c44b7b46a6ac4d11d5d4db77d8";
+
+  const response = await fetch(
+    `https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.NOTION_SECRET}`,
+        "Notion-Version": "2021-05-13",
+      },
+    }
+  ).then((res) => res.json());
+
+  function convertToSlug(string: string) {
+    const slug = string
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/ /g, "-")
+      .toLowerCase();
+    return slug;
+  }
+
+  console.log({ response });
+
+  const massagedArticles = response.results.map((article) => {
+    const title = article.properties.Name.title[0].plain_text;
+    const slug = convertToSlug(title);
+    return {
+      id: article.id,
+      title,
+      slug,
+      status: article.properties.Status.select.name,
+      created: article.properties["Created Time"].created_time,
+      lastEdited: article.properties["Last Edited Time"].last_edited_time,
+    };
+  });
+
+  return massagedArticles.map((article) => {
+    return {
+      params: {
+        article: article.slug,
+      },
+      props: {
+        article,
+      },
+    };
+  });
 }
 
 export const prerender = true;
+const { article } = Astro.props;
 ---
 
-<!-- <Debug {page} /> -->
-<BaseLayout>
-  <article set:html={html} />
-</BaseLayout>
+{article.slug}
