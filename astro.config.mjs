@@ -17,9 +17,6 @@ export default defineConfig({
         applyBaseStyles: false,
       },
     }),
-    prefetch({ throttle: 3 })
+    prefetch({ throttle: 3 }),
   ],
-  experimental: {
-    assets: true,
-  }
 });
