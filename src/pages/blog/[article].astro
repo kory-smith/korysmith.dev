@@ -5,13 +5,10 @@ import type {
   BlockObjectResponse,
   ListBlockChildrenResponse,
   RichTextItemResponse,
-  PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 export async function getStaticPaths() {
-
-  const NOTION_SECRET = process.env.NOTION_SECRET
-
+  const NOTION_SECRET = import.meta.env.PUBLIC_NOTION_SECRET;
   function isBlockResponseArray(
     array: Array<PartialBlockObjectResponse | BlockObjectResponse>
   ): array is Array<BlockObjectResponse> {
@@ -135,7 +132,6 @@ export async function getStaticPaths() {
     }
   ).then((res) => res.json());
 
-  
   const massagedArticles = response.results.map((article) => {
     const title = article.properties.Name.title[0].plain_text;
     const slug = convertToSlug(title);
@@ -174,7 +170,6 @@ export async function getStaticPaths() {
   );
 
   return massagedArticlesWithContent.map((article) => {
-    console.log({article})
     return {
       params: {
         article: article.slug,
@@ -190,4 +185,6 @@ export const prerender = true;
 const { article } = Astro.props;
 ---
 
-<div set:html={article.content}></div>
+<BaseLayout title={article.title} description="Blog page">
+  <div set:html={article.content} />
+</BaseLayout>
