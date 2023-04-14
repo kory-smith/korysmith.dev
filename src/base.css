@@ -54,7 +54,8 @@
 }
 @font-face {
   font-family: "iA Writer Mono S";
-  src: url("../iAWriterMonoS-Bold.woff") format("woff");
+  src: url("../iAWriterMonoS-Bold-subset.woff2") format("woff"),
+    url("../iAWriterMonoS-Bold-subset.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: optional;
