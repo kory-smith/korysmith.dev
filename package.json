@@ -1,5 +1,6 @@
 {
-	"name": "",
+	"name": "korysmith.dev",
+	"author": "Kory Smith",
 	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
