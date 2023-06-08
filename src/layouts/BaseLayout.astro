@@ -8,6 +8,10 @@ interface Props {
 	description: string;
 }
 const { title, description } = Astro.props;
+
+const isHomepage = Astro.url.pathname === "/";
+
+const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
 ---
 
 <html lang="en">
@@ -17,14 +21,14 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <link rel="preload" href="/iAWriterMonoS-subset.woff2" as="font" type="font/woff2" crossorigin> 
-    <link rel="preload" href="/iAWriterMonoS-Bold.woff" as="font" type="font/woff" crossorigin> 
+    <link rel="preload" href="/iAWriterMonoS-Bold-subset.woff2" as="font" type="font/woff2" crossorigin> 
 
 		<meta property="og:image" content="/retro-k.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 
-    <title>{title} | Kory Smith</title>
+    <title>{titleWithSuffix}</title>
   </head>
   <body>
     <Navigation />
