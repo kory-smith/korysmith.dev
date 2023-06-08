@@ -1,3 +1,5 @@
+export const prerender = false;
+
 export async function onRequestPost({ request, env }) {
   const todoistSecret = env.TODOIST_CLIENT_SECRET;
   if (todoistSecret) {
