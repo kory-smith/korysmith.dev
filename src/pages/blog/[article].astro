@@ -6,9 +6,11 @@ import type {
   ListBlockChildrenResponse,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
+import { renderPicture } from "astro-imagetools/api";
+
 
 import fs from "fs";
-import path from 'path';
+import path from "path";
 
 export async function getStaticPaths() {
   const NOTION_SECRET = import.meta.env.PUBLIC_NOTION_SECRET;
@@ -59,7 +61,7 @@ export async function getStaticPaths() {
             result.quote.rich_text
           )}</blockquote>`;
         } else if (result.type === "image") {
-          html+= await handleImage(result);
+          html += await handleImage(result);
         } else {
           html += `<p>Block type "${result.type}" not supported.</p>`;
         }
@@ -69,20 +71,27 @@ export async function getStaticPaths() {
   }
 
   async function handleImage(result: BlockObjectResponse) {
-
     const image = await fetch(result.image.file.url, {
       method: "GET",
-    })
+    });
 
     const imageBuffer = await image.arrayBuffer();
 
     const dir = path.join(process.cwd(), "./src/assets");
 
-    fs.writeFileSync(path.join(dir, `${result.id}.png`), Buffer.from(imageBuffer));
+    const realPath = path.join(dir, `${result.id}.png`);
+    fs.writeFileSync(
+    realPath,
+      Buffer.from(imageBuffer)
+    );
 
-    return `<img src="${result.image.file.url}" alt="${
-      result.image.caption ? notionRichTextToHtml(result.image.caption) : ""
-    }">`;
+    const { picture } = await renderPicture({
+      src: realPath,
+      alt: "test"
+    })
+    
+
+  return picture
   }
 
   function notionRichTextToHtml(richText: RichTextItemResponse[]) {
