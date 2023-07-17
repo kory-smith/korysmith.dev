@@ -71,28 +71,17 @@ export async function getStaticPaths() {
   }
 
   async function handleImage(result: BlockObjectResponse) {
-    const image = await fetch(result.image.file.url, {
-      method: "GET",
-    });
-
-    const imageBuffer = await image.arrayBuffer();
-
-    const dir = path.join(process.cwd(), "./src/assets");
-
-    const realPath = path.join(dir, `${result.id}.png`);
-    fs.writeFileSync(
-    realPath,
-      Buffer.from(imageBuffer)
-    );
+    const response = await fetch(result.image.file.url);
+    const arrayBuffer = await response.arrayBuffer();
+    const imageBase64 = Buffer.from(arrayBuffer).toString('base64');
 
     const { picture } = await renderPicture({
-      src: realPath,
-      alt: "test"
-    })
-    
+        src: `data:image/png;base64,${imageBase64}`,
+        alt: "test"
+    });
 
-  return picture
-  }
+    return picture;
+}
 
   function notionRichTextToHtml(richText: RichTextItemResponse[]) {
     let html = "";
