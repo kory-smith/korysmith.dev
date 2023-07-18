@@ -8,10 +8,10 @@ const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 async function fetchAndWriteImage(url, id) {
   const response = await fetch(url);
   const buffer = await response.buffer();
-  fs.writeFile(path.resolve(process.cwd(), 'public', `${id}.png`), buffer, (err) => {
+  fs.writeFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`), buffer, (err) => {
     console.log({err})
   })
-  return `/${id}.png`;
+  return `/${id}.jpeg`;
 }
 
 function convertToSlug(string) {
@@ -66,10 +66,4 @@ export async function fetchArticles() {
   });
 
   return await Promise.all(articles);
-}
-
-export async function getStaticPaths() {
-  const articles = await fetchArticles();
-  const paths = articles.map((article) => ({ params: { slug: article.slug } }));
-  return paths;
 }
