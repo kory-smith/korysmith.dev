@@ -6,12 +6,40 @@ import sharp from 'sharp';
 const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 
+async function logImageMetadata(imageBuffer, id) {
+	const FILE_NAME = "imageData.json";
+	const FILE_PATH = path.resolve('public', FILE_NAME);
+	const imageDataAlreadyExists = fs.existsSync(FILE_PATH);
+
+	if (!imageDataAlreadyExists) {
+		fs.writeFileSync(FILE_PATH, JSON.stringify({}));
+	}
+	else {
+		const existingImageData = JSON.parse(fs.readFileSync(FILE_PATH));
+		const newImageData = await sharp(imageBuffer).metadata();
+		const massagedImageData = {
+			format: newImageData.format,
+			size: newImageData.size,
+			width: newImageData.width,
+			height: newImageData.height,
+			aspectRatio: newImageData.width / newImageData.height,
+		}
+		if (existingImageData[id]) {
+			return;
+		}
+		existingImageData[id] = massagedImageData;
+		fs.writeFileSync(FILE_PATH, JSON.stringify(existingImageData));
+	}
+}
+
 async function fetchAndWriteImage(url, id) {
   const response = await fetch(url);
   const buffer = await response.buffer();
 	const sourcePath = path.resolve(process.cwd(), 'public', `${id}.png`);
 
   fs.writeFileSync(path.resolve(process.cwd(), 'public', `${id}.png`), buffer);
+
+	await	logImageMetadata(buffer, id)
 
 	const avifPromise = sharp(sourcePath).avif({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.avif`))
 	const webpPromise = sharp(sourcePath).webp({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.webp`))

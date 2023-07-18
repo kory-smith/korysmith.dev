@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import imageData from "../../public/imageData.json"
 
 const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
@@ -9,7 +10,8 @@ function convertToSlug(string) {
 }
 
 async function handleImage(result) {
-  return `<img src=/${result.id}.webp alt="test" />`
+  const {width, height} = imageData[result.id]
+  return `<img src=/${result.id}.webp width=${width} height=${height} alt="test" />`
 }
 
 async function notionBlocksToHtml(page) {

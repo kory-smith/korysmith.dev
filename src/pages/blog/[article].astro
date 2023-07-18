@@ -4,7 +4,6 @@ import { fetchArticles } from "../../scripts/fetchArticles.js";
 
 export async function getStaticPaths() {
   const articles = await fetchArticles();
-  console.log({ articles });
   const paths = articles.map((article) => ({
     params: { article: article.slug },
     props: { article },
