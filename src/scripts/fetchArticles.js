@@ -8,7 +8,11 @@ const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 async function fetchAndWriteImage(url, id) {
   const response = await fetch(url);
   const buffer = await response.buffer();
-  fs.writeFileSync(path.resolve(process.cwd(), 'public', `${id}.png`), buffer);
+  fs.writeFile(path.resolve(process.cwd(), 'public', `${id}.png`), buffer).then((res) => {
+    console.log("Success!", { res })
+  }).catch(err => {
+    console.log("Error!", { err })
+  });
   return `/${id}.png`;
 }
 
