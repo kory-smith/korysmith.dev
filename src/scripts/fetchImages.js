@@ -9,35 +9,11 @@ async function fetchAndWriteImage(url, id) {
   const response = await fetch(url);
   const buffer = await response.buffer();
   fs.writeFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`), buffer, (err) => {
-    console.log({err})
-  })
-  return `/${id}.jpeg`;
+    if (err) console.log(err);
+  });
 }
 
-function convertToSlug(string) {
-  const slug = string.trim().replace(/[^\w\s-]/g, "").replace(/ /g, "-").toLowerCase();
-  return slug;
-}
-
-async function handleImage(result) {
-  return `<img src="/${result.id}.jpeg" alt="Image" />`;
-}
-
-async function notionBlocksToHtml(page) {
-  const { results } = page;
-  let html = "";
-  for (let i = 0; i < results.length; i++) {
-    const result = results[i];
-    if (result.type === "image") {
-      html += await handleImage(result);
-    } else {
-      html += "<p>Block type not supported.</p>";
-    }
-  }
-  return html;
-}
-
-export async function fetchArticles() {
+async function fetchImages() {
   const response = await fetch(`https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`, {
     method: 'POST',
     headers: {
@@ -55,14 +31,15 @@ export async function fetchArticles() {
       },
     }).then((res) => res.json());
 
-    const content = await notionBlocksToHtml(childBlocks);
-    return {
-      id: article.id,
-      title: article.properties.Name.title[0].plain_text,
-      slug: convertToSlug(article.properties.Name.title[0].plain_text),
-      content: content,
-    };
+    for (let i = 0; i < childBlocks.results.length; i++) {
+      const result = childBlocks.results[i];
+      if (result.type === "image") {
+        await fetchAndWriteImage(result.image.file.url, result.id);
+      }
+    }
   });
 
-  return await Promise.all(articles);
+  await Promise.all(articles);
 }
+
+fetchImages().catch(console.error);
