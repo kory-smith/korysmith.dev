@@ -2,14 +2,14 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
 
-const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
+const NOTION_SECRET = process.env.PUBLIC_NOTION_SECRET;
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 
 async function fetchAndWriteImage(url, id) {
   const response = await fetch(url);
   const buffer = await response.buffer();
   fs.writeFileSync(path.resolve(process.cwd(), 'public', `${id}.png`), buffer);
-  return `/public/${id}.png`;
+  return `/${id}.png`;
 }
 
 function convertToSlug(string) {
