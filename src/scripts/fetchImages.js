@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
+import sharp from 'sharp';
 
 const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
@@ -8,9 +9,15 @@ const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 async function fetchAndWriteImage(url, id) {
   const response = await fetch(url);
   const buffer = await response.buffer();
-  fs.writeFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`), buffer, (err) => {
-    if (err) console.log(err);
-  });
+	const sourcePath = path.resolve(process.cwd(), 'public', `${id}.png`);
+
+  fs.writeFileSync(path.resolve(process.cwd(), 'public', `${id}.png`), buffer);
+
+	const avifPromise = sharp(sourcePath).avif({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.avif`))
+	const webpPromise = sharp(sourcePath).webp({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.webp`))
+	const jpegPromise = sharp(sourcePath).jpeg({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`))
+
+	return await Promise.all([avifPromise, webpPromise, jpegPromise]);
 }
 
 async function fetchImages() {

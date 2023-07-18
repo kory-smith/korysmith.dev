@@ -1,19 +1,7 @@
 import fetch from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
-import { renderPicture } from "astro-imagetools/api";
 
 const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
-
-async function fetchAndWriteImage(url, id) {
-  const response = await fetch(url);
-  const buffer = await response.buffer();
-  fs.writeFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`), buffer, (err) => {
-    console.log({err})
-  })
-  return `/${id}.jpeg`;
-}
 
 function convertToSlug(string) {
   const slug = string.trim().replace(/[^\w\s-]/g, "").replace(/ /g, "-").toLowerCase();
@@ -21,8 +9,7 @@ function convertToSlug(string) {
 }
 
 async function handleImage(result) {
-  const picture =  await renderPicture({src: `./${result.id}.jpeg`, alt: "test"})
-  return picture.picture
+  return `<img src=/${result.id}.webp alt="test" />`
 }
 
 async function notionBlocksToHtml(page) {
