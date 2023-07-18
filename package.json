@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
-		"fetchImages": "node scripts/fetchImages.js",
+		"fetchImages": "node src/scripts/fetchImages.js",
 		"prebuild": "npm run fetchImages",
 		"build": "astro build",
 		"preview": "astro preview",
