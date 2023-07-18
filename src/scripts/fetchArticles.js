@@ -17,12 +17,70 @@ async function notionBlocksToHtml(page) {
   let html = "";
   for (let i = 0; i < results.length; i++) {
     const result = results[i];
-    if (result.type === "image") {
+    if (result.type === "paragraph") {
+      html += `<p>${notionRichTextToHtml(result.paragraph.rich_text)}</p>`;
+    } else if (result.type === "heading_1") {
+      html += `<h1>${notionRichTextToHtml(
+        result.heading_1.rich_text
+      )}</h1>`;
+    } else if (result.type === "heading_2") {
+      html += `<h2>${notionRichTextToHtml(
+        result.heading_2.rich_text
+      )}</h2>`;
+    } else if (result.type === "heading_3") {
+      html += `<h3>${notionRichTextToHtml(
+        result.heading_3.rich_text
+      )}</h3>`;
+    } else if (result.type === "bulleted_list_item") {
+      html += `<ul>${notionRichTextToHtml(
+        result.bulleted_list_item.rich_text
+      )}</ul>`;
+    } else if (result.type === "numbered_list_item") {
+      html += `<li>${notionRichTextToHtml(
+        result.numbered_list_item.rich_text
+      )}</li>`;
+    } else if (result.type === "divider") {
+      html += "<hr>";
+    } else if (result.type === "code") {
+      html += `<pre><code>${notionRichTextToHtml(
+        result.code.rich_text
+      )}</code></pre>`;
+    } else if (result.type === "quote") {
+      html += `<blockquote>${notionRichTextToHtml(
+        result.quote.rich_text
+      )}</blockquote>`;
+    } else if (result.type === "image") {
       html += await handleImage(result);
     } else {
-      html += "<p>Block type not supported.</p>";
+      html += `<p>Block type "${result.type}" not supported.</p>`;
     }
   }
+  return html;
+}
+
+function notionRichTextToHtml(richText) {
+  let html = "";
+  richText.forEach((item) => {
+    if (item.type === "text") {
+      let content = item.text.content;
+      if (item.annotations.italic) {
+        content = `<em>${content}</em>`;
+      }
+      if (item.annotations.bold) {
+        content = `<strong>${content}</strong>`;
+      }
+      if (item.annotations.underline) {
+        content = `<u>${content}</u>`;
+      }
+      if (item.annotations.strikethrough) {
+        content = `<s>${content}</s>`;
+      }
+      if (item.annotations.code) {
+        content = `<code>${content}</code>`;
+      }
+      html += content;
+    }
+  });
   return html;
 }
 
