@@ -21,7 +21,7 @@ function convertToSlug(string) {
 }
 
 async function handleImage(result) {
-  const picture =  await renderPicture({src: `./public/${result.id}.jpeg`, alt: "test"})
+  const picture =  await renderPicture({src: `./${result.id}.jpeg`, alt: "test"})
   return picture.picture
 }
 
