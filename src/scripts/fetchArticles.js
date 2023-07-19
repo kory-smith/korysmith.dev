@@ -13,6 +13,7 @@ async function handleImage(result) {
   const imageDataExists = imageData[result.id]
   if (!imageDataExists) {
     console.log("no image data for image", result)
+    console.log("Also, here is imageData", imageData)
   }
   const {width, height} = imageData[result.id]
   return `<img src=/${result.id}.webp width=${width} height=${height} alt="test" />`
