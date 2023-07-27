@@ -10,8 +10,13 @@ function convertToSlug(string) {
 }
 
 async function handleImage(result) {
-  const {width, height} = imageData[result.id]
-  return `<img src=/${result.id}.webp width=${width} height=${height} alt="test" />`
+  // Todo: What other properties can we support? Decoding? Lazy loading?
+  const { width, height } = imageData[result.id];
+  return `<picture>
+            <source srcset="/${result.id}.avif" type="image/avif" width=${width} height=${height}>
+            <source srcset="/${result.id}.webp" type="image/webp" width=${width} height=${height}>
+            <img src="/${result.id}.jpeg" type="image/jpeg" width=${width} height=${height}>
+          </picture>`;
 }
 
 async function notionBlocksToHtml(page) {

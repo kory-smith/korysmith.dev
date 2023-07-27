@@ -39,9 +39,9 @@ async function fetchAndWriteImage(url, id) {
 
 	await	logImageMetadata(buffer, id)
 
-	const avifPromise = sharp(sourcePath).avif({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.avif`))
-	const webpPromise = sharp(sourcePath).webp({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.webp`))
-	const jpegPromise = sharp(sourcePath).jpeg({quality: 10}).toFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`))
+	const avifPromise = sharp(sourcePath).avif({quality: 50}).toFile(path.resolve(process.cwd(), 'public', `${id}.avif`))
+	const webpPromise = sharp(sourcePath).webp({quality: 50}).toFile(path.resolve(process.cwd(), 'public', `${id}.webp`))
+	const jpegPromise = sharp(sourcePath).jpeg({quality: 50}).toFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`))
 
 	return await Promise.all([avifPromise, webpPromise, jpegPromise]);
 }
