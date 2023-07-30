@@ -4,11 +4,6 @@ import imageData from "../../public/images/imageData.json"
 const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 
-function convertToSlug(string) {
-  const slug = string.trim().replace(/[^\w\s-]/g, "").replace(/ /g, "-").toLowerCase();
-  return slug;
-}
-
 async function handleImage(result) {
   const attributes = generateAttributes(result)
   return `<picture>
@@ -133,8 +128,8 @@ export async function fetchArticles() {
     return {
       id: article.id,
       title: article.properties.Name.title[0].plain_text,
-      slug: convertToSlug(article.properties.Name.title[0].plain_text),
-      content: content,
+      slug: article.properties.Slug.rich_text[0].plain_text,
+      content,
     };
   });
 
