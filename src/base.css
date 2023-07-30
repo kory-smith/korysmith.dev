@@ -6,6 +6,7 @@
   --color-primary: #ffa500; /* Lovely orange */
   --color-primary-shade: #cc7900; /* Even darker shade of orange */
   --color-primary-glare: #ffc266; /* Even lighter shade of orange */
+  --color-visited: #b22222;
   --space-zero: clamp(0rem, -0.02rem + 0.11vw, 0.0625rem);
   --space-2xs: clamp(0.25rem, 0.16rem + 0.43vw, 0.5rem);
   --space-xs: clamp(0.75rem, 0.71rem + 0.22vw, 0.875rem);
@@ -114,6 +115,10 @@ a {
   text-decoration-color: var(--color-primary);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2ex;
+}
+
+a:visited {
+  text-decoration-color: var(--color-visited);
 }
 
 [class*="bg-primary"] a {
