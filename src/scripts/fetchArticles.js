@@ -9,6 +9,15 @@ function convertToSlug(string) {
   return slug;
 }
 
+async function handleImage(result) {
+  const attributes = generateAttributes(result)
+  return `<picture>
+            <source srcset="/${result.id}.avif" type="image/avif" ${attributes}>
+            <source srcset="/${result.id}.webp" type="image/webp" ${attributes}>
+            <img src="/${result.id}.jpeg" type="image/jpeg" ${attributes}>
+          </picture>`;
+}
+
 function generateAttributes(result) {
   const { width, height } = imageData[result.id];
   const attributes = {
@@ -22,15 +31,6 @@ function generateAttributes(result) {
   return Object.entries(attributes).reduce((acc, [key, value]) => {
     return `${acc} ${key}="${value}"`
   }, "")
-}
-
-async function handleImage(result) {
-  const attributes = generateAttributes(result)
-  return `<picture>
-            <source srcset="/${result.id}.avif" type="image/avif" ${attributes}>
-            <source srcset="/${result.id}.webp" type="image/webp" ${attributes}>
-            <img src="/${result.id}.jpeg" type="image/jpeg" ${attributes}>
-          </picture>`;
 }
 
 async function notionBlocksToHtml(page) {
