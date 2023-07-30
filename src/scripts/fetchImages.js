@@ -8,7 +8,7 @@ const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 
 async function logImageMetadata(imageBuffer, id) {
 	const FILE_NAME = "imageData.json";
-	const FILE_PATH = path.resolve('public', FILE_NAME);
+	const FILE_PATH = path.resolve('public/images', FILE_NAME);
 	const imageDataAlreadyExists = fs.existsSync(FILE_PATH);
 
 	if (!imageDataAlreadyExists) {
@@ -31,17 +31,21 @@ async function logImageMetadata(imageBuffer, id) {
 }
 
 async function fetchAndWriteImage(url, id) {
+	const imagesDirectoryExists = fs.existsSync(path.resolve(process.cwd(), 'public/images'));
+	if (!imagesDirectoryExists) {
+		fs.mkdirSync(path.resolve(process.cwd(), 'public/images'));
+	}
   const response = await fetch(url);
   const buffer = await response.buffer();
-	const sourcePath = path.resolve(process.cwd(), 'public', `${id}.png`);
+	const SOURCE_PATH = path.resolve(process.cwd(), 'public/images', `${id}.png`);
 
-  fs.writeFileSync(path.resolve(process.cwd(), 'public', `${id}.png`), buffer);
+  fs.writeFileSync(SOURCE_PATH, buffer);
 
 	await	logImageMetadata(buffer, id)
 
-	const avifPromise = sharp(sourcePath).avif({quality: 50}).toFile(path.resolve(process.cwd(), 'public', `${id}.avif`))
-	const webpPromise = sharp(sourcePath).webp({quality: 50}).toFile(path.resolve(process.cwd(), 'public', `${id}.webp`))
-	const jpegPromise = sharp(sourcePath).jpeg({quality: 50}).toFile(path.resolve(process.cwd(), 'public', `${id}.jpeg`))
+	const avifPromise = sharp(SOURCE_PATH).avif({quality: 50}).toFile(path.resolve(process.cwd(), 'public/images', `${id}.avif`))
+	const webpPromise = sharp(SOURCE_PATH).webp({quality: 50}).toFile(path.resolve(process.cwd(), 'public/images', `${id}.webp`))
+	const jpegPromise = sharp(SOURCE_PATH).jpeg({quality: 50}).toFile(path.resolve(process.cwd(), 'public/images', `${id}.jpeg`))
 
 	return await Promise.all([avifPromise, webpPromise, jpegPromise]);
 }

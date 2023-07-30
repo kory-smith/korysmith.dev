@@ -12,9 +12,9 @@ function convertToSlug(string) {
 async function handleImage(result) {
   const attributes = generateAttributes(result)
   return `<picture>
-            <source srcset="/${result.id}.avif" type="image/avif" ${attributes}>
-            <source srcset="/${result.id}.webp" type="image/webp" ${attributes}>
-            <img src="/${result.id}.jpeg" type="image/jpeg" ${attributes}>
+            <source srcset="/images/${result.id}.avif" type="image/avif" ${attributes}>
+            <source srcset="/images/${result.id}.webp" type="image/webp" ${attributes}>
+            <img src="/images/${result.id}.jpeg" type="image/jpeg" ${attributes}>
           </picture>`;
 }
 
