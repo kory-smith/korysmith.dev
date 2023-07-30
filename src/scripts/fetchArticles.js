@@ -84,6 +84,7 @@ function notionRichTextToHtml(richText) {
   richText.forEach((item) => {
     if (item.type === "text") {
       let content = item.text.content;
+      // Apply annotations
       if (item.annotations.italic) {
         content = `<em>${content}</em>`;
       }
@@ -99,11 +100,16 @@ function notionRichTextToHtml(richText) {
       if (item.annotations.code) {
         content = `<code>${content}</code>`;
       }
+      // Handle links
+      if (item.text.link) {
+        content = `<a href="${item.text.link.url}">${content}</a>`;
+      }
       html += content;
     }
   });
   return html;
 }
+
 
 export async function fetchArticles() {
   const response = await fetch(`https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`, {
