@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import imageData from "../../public/imageData.json"
+import imageData from "../../public/images/imageData.json"
 
 const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
