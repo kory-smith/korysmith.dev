@@ -1,9 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { fetchArticles } from "../../scripts/fetchArticles.js";
+import { fetchArticlesWithStatus } from "../../scripts/fetchArticles.js";
 
 export async function getStaticPaths() {
-  const articles = await fetchArticles();
+  const articles = await fetchArticlesWithStatus("Published");
   const paths = articles.map((article) => ({
     params: { article: article.slug },
     props: { article },
