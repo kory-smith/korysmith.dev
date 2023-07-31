@@ -105,21 +105,11 @@ function notionRichTextToHtml(richText) {
   return html;
 }
 
-
-export async function fetchArticles() {
+export async function fetchArticlesUsingCustomFilter(filter) {
   const response = await fetch(`https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`, {
     method: 'POST',
-    // https://developers.notion.com/reference/post-database-query-filter#status
-    body: JSON.stringify(
-      {
-        filter: {
-          property: "Status",
-          select: {
-            does_not_equal: "Standalone"
-          }
-        }
-      }
-    ),
+    // Don't include a body if there's no filter
+    ...(filter && { body: JSON.stringify(filter) }),
     headers: {
       'Content-Type': "application/json",
       Authorization: `Bearer ${NOTION_SECRET}`,
@@ -132,7 +122,7 @@ export async function fetchArticles() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${NOTION_SECRET}`,
-        'Notion-Version': '2022-02-22',
+        'Notion-Version': '2022-06-28',
       },
     }).then((res) => res.json());
 
@@ -146,4 +136,30 @@ export async function fetchArticles() {
   });
 
   return await Promise.all(articles);
+}
+
+export async function fetchAllArticles() {
+  return await fetchArticlesUsingCustomFilter();
+}
+
+export async function fetchArticlesWithName(name) {
+  return await fetchArticlesUsingCustomFilter({
+    filter: {
+      property: "Name",
+      rich_text: {
+        equals: name
+      }
+    }
+  })
+}
+
+export async function fetchArticlesWithStatus(status) {
+  return await fetchArticlesUsingCustomFilter({
+    filter: {
+      property: "Status",
+      select: {
+        equals: status
+      }
+    }
+  })
 }
