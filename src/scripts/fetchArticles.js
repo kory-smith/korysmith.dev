@@ -109,9 +109,21 @@ function notionRichTextToHtml(richText) {
 export async function fetchArticles() {
   const response = await fetch(`https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`, {
     method: 'POST',
+    // https://developers.notion.com/reference/post-database-query-filter#status
+    body: JSON.stringify(
+      {
+        filter: {
+          property: "Status",
+          select: {
+            does_not_equal: "Standalone"
+          }
+        }
+      }
+    ),
     headers: {
+      'Content-Type': "application/json",
       Authorization: `Bearer ${NOTION_SECRET}`,
-      'Notion-Version': '2021-05-13',
+      'Notion-Version': '2022-06-28',
     },
   }).then((res) => res.json());
 
