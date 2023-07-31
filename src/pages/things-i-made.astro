@@ -1,8 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { fetchArticlesWithName } from "../scripts/fetchArticles";
+
+// Returns an array, even though we only get one article back
+const [ thingsIMadeData ] = await fetchArticlesWithName("Things I made")
 ---
 
 <BaseLayout title="Things I've made" description="Things Kory has made">
   <h1>Things I've made</h1>
-	<p>My place to show off stuff I've created.</p>
+  <div set:html={thingsIMadeData.content} />
 </BaseLayout>
