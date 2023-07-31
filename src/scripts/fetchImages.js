@@ -51,13 +51,35 @@ async function fetchAndWriteImage(url, id) {
 }
 
 async function fetchImages() {
-  const response = await fetch(`https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${NOTION_SECRET}`,
-      'Notion-Version': '2021-05-13',
-    },
-  }).then((res) => res.json());
+  const response = await fetch(
+    `https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        filter: {
+          or: [
+            {
+              property: "Status",
+              select: {
+                equals: "Published",
+              },
+            },
+            {
+              property: "Status",
+              select: {
+                equals: "Standalone",
+              },
+            },
+          ],
+        },
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${NOTION_SECRET}`,
+        "Notion-Version": "2022-06-28",
+      },
+    }
+  ).then((res) => res.json());
 
   const articles = response.results.map(async (article) => {
     const childBlocks = await fetch(`https://api.notion.com/v1/blocks/${article.id}/children?page_size=800`, {
