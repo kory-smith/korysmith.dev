@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { fetchArticlesWithName } from "../scripts/fetchArticles";
+
+// Returns an array, even though we only get one article back
+const [ thingsIUseData ] = await fetchArticlesWithName("Things I use and love")
+---
+
+<BaseLayout
+  title="Things Kory Uses (And Loves)"
+  description="Things Kory Uses (And Loves)"
+>
+  <div set:html={thingsIUseData.content} />
+</BaseLayout>

@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import prefetch from "@astrojs/prefetch";
+import { astroImageTools } from "astro-imagetools";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,5 +19,6 @@ export default defineConfig({
       },
     }),
     prefetch({ throttle: 3 }),
+    astroImageTools
   ],
 });
