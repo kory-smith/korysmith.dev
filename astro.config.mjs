@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import prefetch from "@astrojs/prefetch";
-import { astroImageTools } from "astro-imagetools";
+import subfont from "@ernxst/subfont/astro";
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,6 +19,6 @@ export default defineConfig({
       },
     }),
     prefetch({ throttle: 3 }),
-    astroImageTools
+    subfont(),
   ],
 });
