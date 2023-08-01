@@ -1,4 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
   "exclude": ["functions/**/*"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      // Enables import imageData from "~/public/images/imageData.json"; where ~ is root
+      "~/*": ["./*"],
+      // Enables import BaseLayout from "@/layouts/BaseLayout.astro"; where @ is root/src
+      "@/*": ["./src/*"]
+    },
+  },
 }
