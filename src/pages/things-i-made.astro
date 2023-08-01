@@ -1,6 +1,6 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { fetchArticlesWithName } from "../scripts/fetchArticles";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { fetchArticlesWithName } from "@/scripts/fetchArticles";
 
 // Returns an array, even though we only get one article back
 const [ thingsIMadeData ] = await fetchArticlesWithName("Things I made")
