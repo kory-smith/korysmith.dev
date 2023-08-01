@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import imageData from "../../public/images/imageData.json"
 
-const NOTION_SECRET = "secret_JCzfvkeA0KeTb6nCGSmtZ90Ura8OcVWsFiOyNCqdGFE"
+const NOTION_SECRET = process.env['PUBLIC_NOTION_SECRET']
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 
 async function handleImage(result) {
