@@ -3,13 +3,16 @@ import { validateTodoistWebhook } from "../../helpers/validateTodoistWebhook";
 export const prerender = false;
 
 export async function onRequestPost({ request, env }) {
-  const todoistSecret = env.TODOIST_CLIENT_SECRET;
-  const openAISecret: string | null = env.OPENAI_API_KEY;
-  if (todoistSecret) {
+  const todoistSecret = env.TODOIST_AUTO_LABEL_SECRET;
+  const openAIAPIKey = env.OPENAI_API_KEY;
+  if (todoistSecret && openAIAPIKey) {
 
     await validateTodoistWebhook(request, todoistSecret);
 
-    const messageToGPT = `Using Todoist for task mgmt. When I add a new task, a webhook triggers AI to analyze the task and return an array of applicable labels from the list below (or null if none apply). I use the GTD method.
+		const taskId = request.body.event_data.id;
+		const taskContent = request.body.event_data.content;
+
+    const messageToGPT = `I use Todoist for task mgmt. When I add a new task, you will analyze the task and return an array of applicable labels from the list below (or null if none apply).
 		Create_project: Start a new project
 		Waiting_for: Awaiting someone else
 		Sydney: Involves Sydney
@@ -23,9 +26,8 @@ export async function onRequestPost({ request, env }) {
 		Home: Home-only task
 		Phone_call: Needs a call
 		Standup: Mention at standup
-		
-		Task text is "${request.body.event_data.content}"
-		`;
+
+		Task: "${taskContent}"`;
 
     const AIResponse = await fetch(
       "https://api.openai.com/v1/chat/completions",
@@ -33,7 +35,7 @@ export async function onRequestPost({ request, env }) {
         method: "POST",
         headers: {
           Accept: "application/json",
-          Authorization: `Bearer ${openAISecret}`,
+          Authorization: `Bearer ${openAIAPIKey}`,
           "Content-Type": "application/json",
           "User-Agent": "korysmith.dev",
         },
@@ -44,7 +46,7 @@ export async function onRequestPost({ request, env }) {
       }
     );
 
-    const responseText = await AIResponse.json();
+    const responseText = await AIResponse.json() as any
 
     const labels = JSON.parse(responseText).choices[0].message.content.labels;
 
@@ -53,7 +55,7 @@ export async function onRequestPost({ request, env }) {
     }
 
     const todoistUpdateResponse = await fetch(
-      `https://api.todoist.com/rest/v2/tasks/${request.body.event_data.id}`,
+      `https://api.todoist.com/rest/v2/tasks/${taskId}`,
       {
         method: "POST",
         headers: {
@@ -70,6 +72,9 @@ export async function onRequestPost({ request, env }) {
 
 		// Todo: do something with the response
   } else {
-    return new Response("Todoist secret not set", { status: 500 });
+		const todistSecretIsMissing = todoistSecret ? "" : "Todoist secret not set";
+		const openAIKeyIsMissing = openAIAPIKey ? "" : "OpenAI key not set";
+		const combined = todistSecretIsMissing + openAIKeyIsMissing;
+    return new Response(combined, { status: 500 });
   }
 }
