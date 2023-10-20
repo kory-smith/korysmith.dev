@@ -2,6 +2,7 @@
 import "@/base.css";
 
 import Navigation from "@/components/Navigation.astro";
+import Footer from "@/components/Footer.astro";
 
 interface Props {
 	title: string;
@@ -32,8 +33,7 @@ const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
   </head>
   <body>
     <Navigation />
-    <div class="region flow prose wrapper">
-      <slot />
-    </div>
+    <slot />
+    <Footer />
   </body>
 </html>
