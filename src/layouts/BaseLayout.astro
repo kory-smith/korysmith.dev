@@ -45,7 +45,11 @@ const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
   </head>
   <body>
     <Navigation />
-    <slot />
+    <main id="main-content">
+      <article class="wrapper region prose flow">
+        <slot />
+      </article>
+    </main>
     <Footer />
   </body>
 </html>
