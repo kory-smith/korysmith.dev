@@ -70,6 +70,49 @@
   }
 }
 
+blockquote,
+body,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+ol[role="list"],
+ul[role="list"] {
+  list-style: none;
+}
+html {
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+}
+html:focus-within {
+  scroll-behavior: smooth;
+}
+body {
+  line-height: 1.5;
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+}
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+img,
+picture {
+  display: block;
+  max-width: 100%;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
 body {
   background: var(--color-light);
   color: var(--color-dark);
