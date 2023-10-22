@@ -25,7 +25,6 @@
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20230518.0",
-		"@ernxst/subfont": "^0.1.4",
 		"@notionhq/client": "^2.2.5",
 		"glyphhanger": "^5.0.0",
 		"typescript": "^5.1.3"

@@ -4,7 +4,6 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import prefetch from "@astrojs/prefetch";
-import subfont from "@ernxst/subfont/astro";
 import sitemap from "@astrojs/sitemap";
 
 let site = ""
@@ -28,7 +27,6 @@ export default defineConfig({
       },
     }),
     prefetch({ throttle: 3 }),
-    subfont(),
     sitemap(),
   ],
 });
