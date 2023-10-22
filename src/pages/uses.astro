@@ -11,5 +11,6 @@ const [ thingsIUseData ] = await fetchArticlesWithName("Things I use and love")
   title="Things Kory Uses (And Loves)"
   description="Things Kory Uses (And Loves)"
 >
-  <div set:html={thingsIUseData.content} />
+  <h1>Things I Use (and Love)</h1>
+  <div class="flow" set:html={thingsIUseData.content} />
 </BaseLayout>

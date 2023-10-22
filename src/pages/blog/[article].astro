@@ -41,5 +41,5 @@ const { article } = Astro.props;
       >{article.formattedLastEditedTime}</time
     >
   </i>
-  <div set:html={article.content} />
+  <div class="flow" set:html={article.content} />
 </BaseLayout>
