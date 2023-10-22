@@ -19,7 +19,16 @@ const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
   <head>
     <meta charset="utf-8" />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      href="favicon-light-mode.png"
+      rel="icon"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      href="favicon-dark-mode.png"
+      rel="icon"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <link
       rel="preload"
