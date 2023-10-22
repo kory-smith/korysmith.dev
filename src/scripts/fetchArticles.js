@@ -40,13 +40,13 @@ async function notionBlocksToHtml(page) {
         result.heading_1.rich_text
       )}</h1>`;
     } else if (result.type === "heading_2") {
-      html += `<h2>${notionRichTextToHtml(
+      html += `<h2 id="${result.heading_2.rich_text[0].plain_text}">${notionRichTextToHtml(
         result.heading_2.rich_text
-      )}</h2>`;
+      )}<a href="#${result.heading_2.rich_text[0].plain_text}">#</a></h2>`;
     } else if (result.type === "heading_3") {
-      html += `<h3>${notionRichTextToHtml(
+      html += `<h3 id="${result.heading_3.rich_text[0].plain_text}">${notionRichTextToHtml(
         result.heading_3.rich_text
-      )}</h3>`;
+      )}<a href="#${result.heading_3.rich_text[0].plain_text}">#</a></h3>`;
     } else if (result.type === "bulleted_list_item") {
       html += `<ul>${notionRichTextToHtml(
         result.bulleted_list_item.rich_text
