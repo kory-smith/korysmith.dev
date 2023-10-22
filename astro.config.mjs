@@ -5,10 +5,12 @@ import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import prefetch from "@astrojs/prefetch";
 import subfont from "@ernxst/subfont/astro";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
   output: "hybrid",
+  site: "https://korysmith.dev/",
   adapter: cloudflare({
     mode: "directory",
   }),
@@ -20,5 +22,6 @@ export default defineConfig({
     }),
     prefetch({ throttle: 3 }),
     subfont(),
+    sitemap(),
   ],
 });
