@@ -4,10 +4,23 @@ import { fetchArticlesWithStatus } from "@/scripts/fetchArticles.js";
 
 export async function getStaticPaths() {
   const articles = await fetchArticlesWithStatus("Published");
-  const paths = articles.map((article) => ({
-    params: { article: article.slug },
-    props: { article },
-  }));
+  const paths = articles.map((article) => {
+    const createdTime = new Date(article.createdTime);
+    const formattedCreatedTime = `${
+      createdTime.getMonth() + 1
+    }/${createdTime.getDate()}/${createdTime.getFullYear()}`;
+    article.formattedCreatedTime = formattedCreatedTime;
+
+    const lastEditedTime = new Date(article.lastEditedTime);
+    const formattedLastEditedTime = `${
+      lastEditedTime.getMonth() + 1
+    }/${lastEditedTime.getDate()}/${lastEditedTime.getFullYear()}`;
+    article.formattedLastEditedTime = formattedLastEditedTime;
+    return {
+      params: { article: article.slug },
+      props: { article },
+    };
+  });
   return paths;
 }
 
@@ -15,5 +28,18 @@ const { article } = Astro.props;
 ---
 
 <BaseLayout title={article.title} description="Blog page">
+  <h1>{article.title}</h1>
+  <p>
+    <i>
+      Published on <time style="display: inline"
+        >{article.formattedCreatedTime}</time
+      >
+    </i>
+  </p>
+  <i>
+    Last edited on <time style="display: inline"
+      >{article.formattedLastEditedTime}</time
+    >
+  </i>
   <div set:html={article.content} />
 </BaseLayout>
