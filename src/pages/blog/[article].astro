@@ -1,6 +1,6 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { fetchArticlesWithStatus } from "../../scripts/fetchArticles.js";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { fetchArticlesWithStatus } from "@/scripts/fetchArticles.js";
 
 export async function getStaticPaths() {
   const articles = await fetchArticlesWithStatus("Published");
