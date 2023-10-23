@@ -1,8 +1,14 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import { Picture } from 'astro:assets';
+import koryHeadshot from '~/public/kory-headshot.png';
 ---
 
 <BaseLayout title="About Kory" description="About Kory Smith">
-  <h1>About me</h1>
-  <p>My place for giving a small elevator pitch about who I am as a human.</p>
+  <h1>About Kory</h1>
+  <p>Hi, I'm Kory Smith! I'm a web developer based out of Brooklyn, New York. I'm especially interested in web performance, web standards, images, and fonts (though I haven't done anything special with the last two)</p>
+
+  <p>Here's a picture of me, so you know what I look like:</p>
+  <Picture src={koryHeadshot} formats={['avif', 'webp']} alt="A headshot of Kory Smith" />
 </BaseLayout>
