@@ -15,18 +15,18 @@
 		"subsetFonts": "find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/iAWriterMonoS.woff2' --formats=woff2,woff && find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/iAWriterMonoS-Bold.woff2' --formats=woff2,woff"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^6.4.0",
-		"@astrojs/prefetch": "^0.3.0",
+		"@astrojs/cloudflare": "^7.6.1",
+		"@astrojs/prefetch": "^0.4.1",
 		"@astrojs/sitemap": "^3.0.2",
-		"@astrojs/tailwind": "^3.1.3",
-		"astro": "^2.6.1",
-		"sharp": "^0.32.3",
-		"tailwindcss": "^3.3.2"
+		"@astrojs/tailwind": "^5.0.2",
+		"astro": "^3.3.2",
+		"sharp": "^0.32.6",
+		"tailwindcss": "^3.3.3"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20230518.0",
-		"@notionhq/client": "^2.2.5",
+		"@cloudflare/workers-types": "^4.20231016.0",
+		"@notionhq/client": "^2.2.13",
 		"glyphhanger": "^5.0.0",
-		"typescript": "^5.1.3"
+		"typescript": "^5.2.2"
 	}
 }
