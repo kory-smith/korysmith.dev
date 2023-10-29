@@ -118,7 +118,7 @@ export async function fetchArticlesUsingCustomFilter(filter) {
   }).then((res) => res.json());
 
   const articles = response.results.map(async (article) => {
-    const childBlocks = await fetch(`https://api.notion.com/v1/blocks/${article.id}/children?page_size=100`, {
+    const childBlocks = await fetch(`https://api.notion.com/v1/blocks/${article.id}/children`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${NOTION_SECRET}`,
