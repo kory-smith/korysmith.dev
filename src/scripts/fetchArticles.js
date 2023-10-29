@@ -131,7 +131,7 @@ export async function fetchArticlesUsingCustomFilter(filter) {
       id: article.id,
       title: article.properties.Name.title[0].plain_text,
       slug: article.properties.Slug.rich_text[0].plain_text,
-      createdTime: article.properties["Created Time"].created_time,
+      publishedDate: article.properties["Published Date"].date.start,
       lastEditedTime: article.properties["Last Edited Time"].last_edited_time,
       content,
     };

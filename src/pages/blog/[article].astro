@@ -5,11 +5,12 @@ import { fetchArticlesWithStatus } from "@/scripts/fetchArticles.js";
 export async function getStaticPaths() {
   const articles = await fetchArticlesWithStatus("Published");
   const paths = articles.map((article) => {
-    const createdTime = new Date(article.createdTime);
-    const formattedCreatedTime = `${
-      createdTime.getMonth() + 1
-    }/${createdTime.getDate()}/${createdTime.getFullYear()}`;
-    article.formattedCreatedTime = formattedCreatedTime;
+    const publishedDate = new Date(article.publishedDate);
+    const formattedPublishedDate = `${
+      publishedDate.getMonth() + 1
+    }/${publishedDate.getDate() + 1}/${publishedDate.getFullYear()}`;
+
+    article.publishedDate = formattedPublishedDate;
 
     const lastEditedTime = new Date(article.lastEditedTime);
     const formattedLastEditedTime = `${
@@ -32,7 +33,7 @@ const { article } = Astro.props;
   <p>
     <i>
       Published on <time style="display: inline"
-        >{article.formattedCreatedTime}</time
+        >{article.publishedDate}</time
       >
     </i>
   </p>
