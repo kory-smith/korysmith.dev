@@ -98,8 +98,13 @@ function contentToHTML(content) {
       html += handleImage(block);
     } else {
       const tag = createTag(block);
-      const innerHTML = notionRichTextToHtml(block.richText);
-      if (tag === "ul" || tag === "ol") {
+      let innerHTML = notionRichTextToHtml(block.richText);
+      // Add # and an id to headers
+      if (tag === "h1" || tag === "h2" || tag === "h3") {
+        innerHTML += `<a href="#${block.headerHelper}">#</a>`;
+        html += wrapInTag(tag, innerHTML, [`id="${block.headerHelper}"`]);
+        // Do crazy things to handle nested lists
+      } else if (tag === "ul" || tag === "ol") {
         inList = true;
         listHtml += `<li>${innerHTML}${
           block.children ? contentToHTML(block.children) : ""
