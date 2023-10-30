@@ -28,8 +28,7 @@ function generateAttributes(result) {
   }, "")
 }
 
-async function notionBlocksToHtml(page) {
-  const { results } = page;
+async function notionBlocksToHtml(results) {
   let html = "";
   for (let i = 0; i < results.length; i++) {
     const result = results[i];
@@ -105,6 +104,36 @@ function notionRichTextToHtml(richText) {
   return html;
 }
 
+async function fetchChildBlocksRecursively(blockId) {
+  const { results: childBlocks } = await fetch(
+    `https://api.notion.com/v1/blocks/${blockId}/children?page_size=100`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${NOTION_SECRET}`,
+        "Notion-Version": "2022-06-28",
+      },
+    }
+  ).then((res) => res.json());
+
+  const contentArr = [];
+
+  for (const childBlock of childBlocks) {
+    if (childBlock.has_children) {
+      // First, get the content of the block that has children
+      const parentContent = await notionBlocksToHtml([childBlock]);
+      contentArr.push(parentContent);
+      // Then, get the child content
+      const childContent = await fetchChildBlocksRecursively(childBlock.id);
+      contentArr.push(childContent);
+    } else {
+      const singleContent = await notionBlocksToHtml([childBlock]); // assume it takes array
+      contentArr.push(singleContent);
+    }
+  }
+  return contentArr.join("");
+}
+
 export async function fetchArticlesUsingCustomFilter(filter) {
   const response = await fetch(`https://api.notion.com/v1/databases/${ARTICLES_DATABASE_ID}/query`, {
     method: 'POST',
@@ -118,15 +147,7 @@ export async function fetchArticlesUsingCustomFilter(filter) {
   }).then((res) => res.json());
 
   const articles = response.results.map(async (article) => {
-    const childBlocks = await fetch(`https://api.notion.com/v1/blocks/${article.id}/children`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${NOTION_SECRET}`,
-        'Notion-Version': '2022-06-28',
-      },
-    }).then((res) => res.json());
-
-    const content = await notionBlocksToHtml(childBlocks);
+    const content = await fetchChildBlocksRecursively(article.id);
     return {
       id: article.id,
       title: article.properties.Name.title[0].plain_text,
