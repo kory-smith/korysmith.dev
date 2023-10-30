@@ -4,7 +4,7 @@ import imageData from "~/public/images/imageData.json"
 const NOTION_SECRET = process.env['PUBLIC_NOTION_SECRET']
 const ARTICLES_DATABASE_ID = 'bf7e16c44b7b46a6ac4d11d5d4db77d8';
 
-async function handleImage(result) {
+function handleImage(result) {
   const attributes = generateAttributes(result)
   return `<picture>
             <source srcset="/images/${result.id}.avif" type="image/avif" ${attributes}>
@@ -26,51 +26,6 @@ function generateAttributes(result) {
   return Object.entries(attributes).reduce((acc, [key, value]) => {
     return `${acc} ${key}="${value}"`
   }, "")
-}
-
-async function notionBlocksToHtml(results) {
-  let html = "";
-  for (let i = 0; i < results.length; i++) {
-    const result = results[i];
-    if (result.type === "paragraph") {
-      html += `<p>${notionRichTextToHtml(result.paragraph.rich_text)}</p>`;
-    } else if (result.type === "heading_1") {
-      html += `<h1>${notionRichTextToHtml(
-        result.heading_1.rich_text
-      )}</h1>`;
-    } else if (result.type === "heading_2") {
-      html += `<h2 id="${result.heading_2.rich_text[0].plain_text}">${notionRichTextToHtml(
-        result.heading_2.rich_text
-      )}<a href="#${result.heading_2.rich_text[0].plain_text}">#</a></h2>`;
-    } else if (result.type === "heading_3") {
-      html += `<h3 id="${result.heading_3.rich_text[0].plain_text}">${notionRichTextToHtml(
-        result.heading_3.rich_text
-      )}<a href="#${result.heading_3.rich_text[0].plain_text}">#</a></h3>`;
-    } else if (result.type === "bulleted_list_item") {
-      html += `<ul>${notionRichTextToHtml(
-        result.bulleted_list_item.rich_text
-      )}</ul>`;
-    } else if (result.type === "numbered_list_item") {
-      html += `<ol>${notionRichTextToHtml(
-        result.numbered_list_item.rich_text
-      )}</ol>`;
-    } else if (result.type === "divider") {
-      html += "<hr>";
-    } else if (result.type === "code") {
-      html += `<pre><code>${notionRichTextToHtml(
-        result.code.rich_text
-      )}</code></pre>`;
-    } else if (result.type === "quote") {
-      html += `<blockquote>${notionRichTextToHtml(
-        result.quote.rich_text
-      )}</blockquote>`;
-    } else if (result.type === "image") {
-      html += await handleImage(result);
-    } else {
-      html += `<p>Block type "${result.type}" not supported.</p>`;
-    }
-  }
-  return html;
 }
 
 function notionRichTextToHtml(richText) {
@@ -116,22 +71,82 @@ async function fetchChildBlocksRecursively(blockId) {
     }
   ).then((res) => res.json());
 
-  const contentArr = [];
-
+  const list = []
   for (const childBlock of childBlocks) {
-    if (childBlock.has_children) {
-      // First, get the content of the block that has children
-      const parentContent = await notionBlocksToHtml([childBlock]);
-      contentArr.push(parentContent);
-      // Then, get the child content
-      const childContent = await fetchChildBlocksRecursively(childBlock.id);
-      contentArr.push(childContent);
+    list.push({
+      children: childBlock.has_children ? await fetchChildBlocksRecursively(childBlock.id) : null,
+      type: childBlock.type,
+      richText: childBlock[childBlock.type].rich_text,
+      id: childBlock.id
+    }) 
+  }
+  return list
+}
+
+/**
+ * Converts an array of objects with type, richText, and id properties to HTML content.
+ *
+ * @param {Array<{type: string, children: {}, richText: string, id: string}>} content - The array of objects to convert.
+ * @returns {string} The HTML content.
+ */
+function contentToHTML(content) {
+  let html = "";
+  let listHtml = "";
+  let inList = false;
+  for (const block of content) {
+    if (block.type === "image") {
+      html += handleImage(block);
     } else {
-      const singleContent = await notionBlocksToHtml([childBlock]); // assume it takes array
-      contentArr.push(singleContent);
+      const tag = createTag(block);
+      const innerHTML = notionRichTextToHtml(block.richText);
+      if (tag === "ul" || tag === "ol") {
+        inList = true;
+        listHtml += `<li>${innerHTML}${
+          block.children ? contentToHTML(block.children) : ""
+        }</li>`;
+      } else {
+        if (inList) {
+          html += wrapInTag("ul", listHtml);
+          listHtml = "";
+          inList = false;
+        }
+        html += wrapInTag(tag, innerHTML);
+      }
     }
   }
-  return contentArr.join("");
+  if (inList) {
+    html += wrapInTag("ul", listHtml);
+  }
+  return html;
+}
+
+function createTag(block) {
+  if (block.type === "paragraph") {
+    return "p" 
+  } else if (block.type === "heading_1") {
+    return "h1"
+  } else if (block.type === "heading_2") {
+    return "h2"
+  } else if (block.type === "heading_3") {
+    return "h3"
+  } else if (block.type === "bulleted_list_item") {
+    return "ul"
+  } else if (block.type === "numbered_list_item") {
+    return "ol"
+  } else if (block.type === "divider") {
+    return "hr"
+  } else if (block.type === "code") {
+    return "code"
+  } else if (block.type === "quote") {
+    return "blockquote"
+  }
+   else {
+    return ""
+  }
+}
+
+function wrapInTag(tag, content) {
+  return `<${tag}>${content}</${tag}>`;
 }
 
 export async function fetchArticlesUsingCustomFilter(filter) {
@@ -148,13 +163,14 @@ export async function fetchArticlesUsingCustomFilter(filter) {
 
   const articles = response.results.map(async (article) => {
     const content = await fetchChildBlocksRecursively(article.id);
+    const parsedContent = contentToHTML(content)
     return {
       id: article.id,
       title: article.properties.Name.title[0].plain_text,
       slug: article.properties.Slug.rich_text[0].plain_text,
       publishedDate: article.properties["Published Date"].date.start,
       lastEditedTime: article.properties["Last Edited Time"].last_edited_time,
-      content,
+      content: parsedContent,
     };
   });
 
