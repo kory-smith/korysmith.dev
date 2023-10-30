@@ -51,9 +51,9 @@ async function notionBlocksToHtml(results) {
         result.bulleted_list_item.rich_text
       )}</ul>`;
     } else if (result.type === "numbered_list_item") {
-      html += `<li>${notionRichTextToHtml(
+      html += `<ol>${notionRichTextToHtml(
         result.numbered_list_item.rich_text
-      )}</li>`;
+      )}</ol>`;
     } else if (result.type === "divider") {
       html += "<hr>";
     } else if (result.type === "code") {
