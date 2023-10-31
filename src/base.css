@@ -592,12 +592,6 @@ pre[class*="language-"] {
   }
 }
 
-@media (min-width: 50em) {
-  .prose :is(ul, ol) {
-    padding-inline-start: 0.15ch;
-  }
-}
-
 .site-header {
   --gutter: 0.5rem var(--space-m);
   padding-block: var(--space-m);
