@@ -51,7 +51,8 @@ function notionRichTextToHtml(richText) {
       }
       // Handle links
       if (item.text.link) {
-        content = `<a href="${item.text.link.url}">${content}</a>`;
+        const relExternalOrNothing = item.text.link.url.includes("korysmith.dev") ? "" : "rel=external" 
+        content = `<a href="${item.text.link.url}" ${relExternalOrNothing}>${content}</a>`;
       }
       html += content;
     }
