@@ -257,6 +257,10 @@ code {
   text-align: left;
   word-break: normal;
   word-spacing: normal;
+  background-color: #e8e8e8;
+  padding: 2px 4px;
+  border-radius: 0.25rem;
+  border: 1px solid #a8a8a8;
 }
 
 pre {
