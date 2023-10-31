@@ -125,7 +125,7 @@ const contentToHTML = (content) => {
       }
       const tag = createTag(block);
       let innerHTML = notionRichTextToHtml(block.richText);
-      innerHTML += `<a href="#${block.headerHelper.toLowerCase()}" class="anchor">🔗</a>`;
+      innerHTML += `<a href="#${block.headerHelper.toLowerCase()}" class="anchor">#</a>`;
       html += wrapInTag(tag, innerHTML, [
         `id="${block.headerHelper.toLowerCase()}"`,
       ]);
