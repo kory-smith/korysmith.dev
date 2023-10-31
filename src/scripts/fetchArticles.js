@@ -76,6 +76,7 @@ async function fetchChildBlocksRecursively(blockId) {
     list.push({
       children: childBlock.has_children ? await fetchChildBlocksRecursively(childBlock.id) : null,
       type: childBlock.type,
+      headerHelper: childBlock[childBlock.type]?.rich_text?.[0]?.plain_text,
       richText: childBlock[childBlock.type].rich_text,
       id: childBlock.id
     }) 
@@ -83,47 +84,94 @@ async function fetchChildBlocksRecursively(blockId) {
   return list
 }
 
+function isHeading(block) {
+  return ["heading_1", "heading_2", "heading_3", "heading_4", "heading_5", "heading_6"].includes(block.type);
+}
+
 /**
- * Converts an array of objects with type, richText, and id properties to HTML content.
+ * @typedef {Object} ContentObject
+ * @property {string} type
+ * @property {string} richText
+ * @property {string} id
+ * @property {ContentObject[]} children
+ */
+
+/**
+ * Converts an array of ContentObject to HTML content.
  *
- * @param {Array<{type: string, children: {}, richText: string, id: string}>} content - The array of objects to convert.
+ * @param {ContentObject[]} content - The array of objects to convert.
  * @returns {string} The HTML content.
  */
-function contentToHTML(content) {
+// Lord forgive me for writing this function
+const contentToHTML = (content) => {
   let html = "";
-  let listHtml = "";
-  let inList = false;
+  let listHelper = false;
   for (const block of content) {
     if (block.type === "image") {
       html += handleImage(block);
-    } else {
+    } else if (isHeading(block)) {
+      if (listHelper) {
+        html += `</${listHelper}>`;
+        listHelper = false;
+      }
       const tag = createTag(block);
       let innerHTML = notionRichTextToHtml(block.richText);
-      // Add # and an id to headers
-      if (tag === "h1" || tag === "h2" || tag === "h3") {
-        innerHTML += `<a href="#${block.headerHelper}">#</a>`;
-        html += wrapInTag(tag, innerHTML, [`id="${block.headerHelper}"`]);
-        // Do crazy things to handle nested lists
-      } else if (tag === "ul" || tag === "ol") {
-        inList = true;
-        listHtml += `<li>${innerHTML}${
-          block.children ? contentToHTML(block.children) : ""
-        }</li>`;
-      } else {
-        if (inList) {
-          html += wrapInTag("ul", listHtml);
-          listHtml = "";
-          inList = false;
+      innerHTML += `<a href="#${block.headerHelper.toLowerCase()}" class="anchor">🔗</a>`
+      html += wrapInTag(tag, innerHTML, [`id="${block.headerHelper.toLowerCase()}"`]);
+    } else if (block.type === "bulleted_list_item") {
+      // If this is the first list item, start a new list and signal for later that we should close it
+      if (!listHelper) {
+        html += "<ul>";
+        const tag = createTag(block);
+        html += wrapInTag(tag, notionRichTextToHtml(block.richText));
+        // Recursively do this for all children
+        if (block.children) {
+          html += contentToHTML(block.children);
         }
-        html += wrapInTag(tag, innerHTML);
+        listHelper = "ul";
+      } else {
+        const tag = createTag(block);
+        html += wrapInTag(tag, notionRichTextToHtml(block.richText));
+        if (block.children) {
+          html += contentToHTML(block.children);
+        }
       }
+    } else if (block.type === "numbered_list_item") {
+      // If this is the first list item, start a new list and signal for later that we should close it
+      if (!listHelper) {
+        html += "<ol>";
+        const tag = createTag(block);
+        html += wrapInTag(tag, notionRichTextToHtml(block.richText));
+        // Recursively do this for all children
+        if (block.children) {
+          html += contentToHTML(block.children);
+        }
+        listHelper = "ol";
+      } else {
+        const tag = createTag(block);
+        html += wrapInTag(tag, notionRichTextToHtml(block.richText));
+        if (block.children) {
+          html += contentToHTML(block.children);
+        }
+      }
+    } else {
+      // Otherwise, the next time we're in a non-list item, we can close the list
+      if (listHelper) {
+        html += `</${listHelper}>`;
+        listHelper = false;
+      }
+      const tag = createTag(block);
+      const innerHTML = notionRichTextToHtml(block.richText);
+      html += wrapInTag(tag, innerHTML);
     }
   }
-  if (inList) {
-    html += wrapInTag("ul", listHtml);
+  // If we're about to return but we have an unterminated list, terminate it
+  if (listHelper) {
+    html += `</${listHelper}>`;
+    listHelper = false;
   }
   return html;
-}
+};
 
 function createTag(block) {
   if (block.type === "paragraph") {
@@ -135,9 +183,9 @@ function createTag(block) {
   } else if (block.type === "heading_3") {
     return "h3"
   } else if (block.type === "bulleted_list_item") {
-    return "ul"
+    return "li"
   } else if (block.type === "numbered_list_item") {
-    return "ol"
+    return "li"
   } else if (block.type === "divider") {
     return "hr"
   } else if (block.type === "code") {
@@ -150,8 +198,8 @@ function createTag(block) {
   }
 }
 
-function wrapInTag(tag, content) {
-  return `<${tag}>${content}</${tag}>`;
+function wrapInTag(tag, content, attributes = []) {
+  return `<${tag} ${attributes.join(" ")}>${content}</${tag}>`;
 }
 
 export async function fetchArticlesUsingCustomFilter(filter) {
