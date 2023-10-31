@@ -229,6 +229,13 @@ export async function fetchArticlesUsingCustomFilter(filter) {
   ).then((res) => res.json());
 
   const articles = response.results.map(async (article) => {
+    if (!article.properties?.Name?.title?.[0]?.plain_text) {
+      throw Error("Article has no title and needs one")
+    } else if (!article.properties?.Slug?.rich_text?.[0]?.plain_text) {
+      throw Error("Article has no slug and needs one")
+    } else if(!article.properties?.["Published Date"]?.date?.start) {
+      throw Error("Article has no published date and needs one")
+    }
     const content = await fetchChildBlocksRecursively(article.id);
     const parsedContent = contentToHTML(content);
     return {
