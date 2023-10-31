@@ -86,6 +86,11 @@ ol[role="list"],
 ul[role="list"] {
   list-style: none;
 }
+
+ol {
+  list-style: decimal;
+}
+
 html {
   text-size-adjust: none;
   -webkit-text-size-adjust: none;
