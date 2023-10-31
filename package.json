@@ -12,7 +12,7 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"//subsetFonts": "This is the manual command I use to subset the font until I can get subfont to work",
-		"subsetFonts": "find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/iAWriterMonoS.woff2' --formats=woff2,woff && find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/iAWriterMonoS-Bold.woff2' --formats=woff2,woff"
+		"subsetFonts": "find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/IBMPlexSans-Regular.ttf' --formats=woff2,woff && find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/IBMPlexSans-Bold.ttf' --formats=woff2,woff"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^7.6.1",

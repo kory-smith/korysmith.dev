@@ -31,7 +31,7 @@
   --size-step-2: clamp(1.4375rem, 1.33rem + 0.54vw, 1.75rem);
   --size-step-3: clamp(1.6875rem, 1.51rem + 0.87vw, 2.1875rem);
   --size-step-4: clamp(2.0625rem, 1.85rem + 1.09vw, 2.6875rem);
-  --font-base: "iA Writer Mono S", "Courier New", monospace;
+  --font-base: "IBM Plex Sans", system-ui, sans-serif;
   --gutter: var(--space-s-m);
   --border-radius: 0.75rem;
   --border-radius-inner: 0.5rem;
@@ -46,17 +46,17 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "iA Writer Mono S";
-  src: url("../iAWriterMonoS-subset.woff2") format("woff2"),
-    url("../iAWriterMonoS-subset.woff") format("woff");
+  font-family: "IBM Plex Sans";
+  src: url("../IBMPlexSans-Regular-subset.woff2") format("woff2"),
+    url("../IBMPlexSans-Regular-subset.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: optional;
 }
 @font-face {
-  font-family: "iA Writer Mono S";
-  src: url("../iAWriterMonoS-Bold-subset.woff2") format("woff"),
-    url("../iAWriterMonoS-Bold-subset.woff") format("woff");
+  font-family: "IBM Plex Sans";
+  src: url("../IBMPlexSans-Bold-subset.woff2") format("woff2"),
+    url("../IBMPlexSans-Bold-subset.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: optional;
@@ -65,7 +65,7 @@
 @layer base {
   body {
     /* Set my default font  */
-    font-family: "iA Writer Mono S", "Courier New", "monospace";
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
     background-color: #f9f9f9;
   }
 }
