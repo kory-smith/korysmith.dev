@@ -117,7 +117,9 @@ const contentToHTML = (content) => {
   let html = "";
   let listHelper = false;
   for (const block of content) {
-    if (block.type === "image") {
+    if (block.type === "divider") {
+      html += "<hr>";
+    } else if (block.type === "image") {
       html += handleImage(block);
     } else if (isHeading(block)) {
       if (listHelper) {

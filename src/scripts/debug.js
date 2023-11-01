@@ -2,5 +2,5 @@
 import { fetchArticlesWithName } from "./fetchArticles.js";
 
 (async () => {
-	await fetchArticlesWithName("Things I use and love");
+	await fetchArticlesWithName("Sample article");
 })()
