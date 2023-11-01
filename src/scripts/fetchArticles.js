@@ -51,7 +51,11 @@ function notionRichTextToHtml(richText) {
       }
       // Handle links
       if (item.text.link) {
-        const relExternalOrNothing = item.text.link.url.includes("korysmith.dev") ? "" : "rel=external" 
+        const relExternalOrNothing = item.text.link.url.includes(
+          "korysmith.dev"
+        )
+          ? ""
+          : "rel=external";
         content = `<a href="${item.text.link.url}" ${relExternalOrNothing}>${content}</a>`;
       }
       html += content;
@@ -232,11 +236,11 @@ export async function fetchArticlesUsingCustomFilter(filter) {
 
   const articles = response.results.map(async (article) => {
     if (!article.properties?.Name?.title?.[0]?.plain_text) {
-      throw Error("Article has no title and needs one")
+      throw Error("Article has no title and needs one");
     } else if (!article.properties?.Slug?.rich_text?.[0]?.plain_text) {
-      throw Error("Article has no slug and needs one")
-    } else if(!article.properties?.["Published Date"]?.date?.start) {
-      throw Error("Article has no published date and needs one")
+      throw Error("Article has no slug and needs one");
+    } else if (!article.properties?.["Published Date"]?.date?.start) {
+      throw Error("Article has no published date and needs one");
     }
     const content = await fetchChildBlocksRecursively(article.id);
     const parsedContent = contentToHTML(content);
