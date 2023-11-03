@@ -1,22 +1,18 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { fetchArticlesWithStatus } from "@/scripts/fetchArticles.js";
+import { createTimeStrings } from "~/helpers/createTimeStrings";
 
 export async function getStaticPaths() {
   const articles = await fetchArticlesWithStatus("Published");
   const paths = articles.map((article) => {
-    const publishedDate = new Date(article.publishedDate);
-    const formattedPublishedDate = `${
-      publishedDate.getMonth() + 1
-    }/${publishedDate.getDate() + 1}/${publishedDate.getFullYear()}`;
+    const { publishedString, lastEditedString } = createTimeStrings(
+      article.publishedDate,
+      article.lastEditedTime
+    );
+    article.publishedString = publishedString;
+    article.lastEditedString = lastEditedString;
 
-    article.publishedDate = formattedPublishedDate;
-
-    const lastEditedTime = new Date(article.lastEditedTime);
-    const formattedLastEditedTime = `${
-      lastEditedTime.getMonth() + 1
-    }/${lastEditedTime.getDate()}/${lastEditedTime.getFullYear()}`;
-    article.formattedLastEditedTime = formattedLastEditedTime;
     return {
       params: { article: article.slug },
       props: { article },
@@ -32,15 +28,16 @@ const { article } = Astro.props;
   <h1>{article.title}</h1>
   <p>
     <i>
-      Published on <time style="display: inline"
-        >{article.publishedDate}</time
-      >
+      Published on <time style="display: inline">{article.publishedString}</time>
     </i>
   </p>
-  <i>
-    Last edited on <time style="display: inline"
-      >{article.formattedLastEditedTime}</time
-    >
-  </i>
+  {
+    article.lastEditedString && (
+      <i>
+        Last edited on{" "}
+        <time style="display: inline">{article.lastEditedString}</time>
+      </i>
+    )
+  }
   <div class="flow" set:html={article.content} />
 </BaseLayout>
