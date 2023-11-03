@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import imageData from "~/public/images/imageData.json";
+import imageData from "../../public/images/imageData.json" assert { type: "json" };
 
 const NOTION_SECRET = process.env["PUBLIC_NOTION_SECRET"];
 const ARTICLES_DATABASE_ID = "bf7e16c44b7b46a6ac4d11d5d4db77d8";
@@ -242,11 +242,22 @@ export async function fetchArticlesUsingCustomFilter(filter) {
     } else if (!article.properties?.["Published Date"]?.date?.start) {
       throw Error("Article has no published date and needs one");
     }
+
+    const title = article.properties.Name.title[0].plain_text
+    const description = article.properties?.Description?.rich_text?.[0]?.plain_text
+
+    const isPublished = JSON.stringify(filter).includes("Published");
+    const descriptionExists = Boolean(description)
+    if (isPublished && !descriptionExists) {
+      throw Error(`Missing description for article "${title}". All published articles need descriptions`);
+    }
+
     const content = await fetchChildBlocksRecursively(article.id);
     const parsedContent = contentToHTML(content);
     return {
       id: article.id,
-      title: article.properties.Name.title[0].plain_text,
+      title,
+      description,
       slug: article.properties.Slug.rich_text[0].plain_text,
       publishedDate: article.properties["Published Date"].date.start,
       lastEditedTime: article.properties["Last Edited Time"].last_edited_time,
