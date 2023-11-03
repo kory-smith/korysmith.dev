@@ -14,7 +14,6 @@ export function createTimeStrings(
   const decoratedLastEditedTime = new Date(lastEditedTime);
 
   if (decoratedPublishedDate.toLocaleDateString() === decoratedLastEditedTime.toLocaleDateString()) {
-    console.log("Same day");
     return { publishedString: formattedPublishedDate };
   } else {
     const formattedLastEditedTime = `${
