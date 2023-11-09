@@ -2,6 +2,7 @@ export const prerender = false;
 
 export async function POST({ request }: { request: Request }) {
   const todoistSecret = import.meta.env.TODOIST_CLIENT_SECRET;
+  console.log(`Do I have the todoist secret? ${todoistSecret != null ? "yes" : "no"}`)
   if (todoistSecret) {
     const payload = await request.text();
     const expectedHmac = request.headers.get("x-todoist-hmac-sha256");
