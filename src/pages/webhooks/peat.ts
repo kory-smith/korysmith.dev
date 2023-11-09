@@ -19,10 +19,8 @@ export async function POST({ request, locals}: { request: Request }) {
     const hmac = await crypto.subtle.sign("HMAC", key, data);
     const generatedHmac = btoa(String.fromCharCode(...new Uint8Array(hmac)));
     if (generatedHmac !== expectedHmac) {
-      console.log("Signature mismatch")
       return new Response("Signature mismatch", { status: 401 });
     }
-    console.log("Signature match")
     const myHeaders = new Headers();
     myHeaders.append("Accept", "application/vnd.github.v3+json");
     myHeaders.append("Authorization", `Bearer ${locals.runtime.env.GITHUB_TOKEN}`);
@@ -41,10 +39,8 @@ export async function POST({ request, locals}: { request: Request }) {
       requestOptions
     );
     if (peatDispatch.status === 204) {
-      console.log("All should be well")
       return new Response("succeeded", { status: 200 });
     } else
-    console.log("Something weird happened, " + peatDispatch.status + " " + peatDispatch.statusText)
       return new Response(peatDispatch.statusText, {
         status: peatDispatch.status,
       });
