@@ -1,7 +1,7 @@
 export const prerender = false;
 
-export async function onRequestPost({ request, env }) {
-  const todoistSecret = env.TODOIST_CLIENT_SECRET;
+export async function POST({ request }: { request: Request }) {
+  const todoistSecret = import.meta.env.TODOIST_CLIENT_SECRET;
   if (todoistSecret) {
     const payload = await request.text();
     const expectedHmac = request.headers.get("x-todoist-hmac-sha256");
@@ -22,7 +22,7 @@ export async function onRequestPost({ request, env }) {
     }
     const myHeaders = new Headers();
     myHeaders.append("Accept", "application/vnd.github.v3+json");
-    myHeaders.append("Authorization", `Bearer ${env.GITHUB_TOKEN}`);
+    myHeaders.append("Authorization", `Bearer ${import.meta.env.GITHUB_TOKEN}`);
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("User-Agent", "korysmith.dev");
     const body = JSON.stringify({
