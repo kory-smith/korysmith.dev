@@ -1,6 +1,7 @@
 export const prerender = false;
 
-export async function POST({ request, locals}: { request: Request }) {
+export async function POST(context) {
+  console.log({context})
   const todoistSecret = locals.env.TODOIST_CLIENT_SECRET;
   console.log(`Do I have the todoist secret? ${todoistSecret != null ? "yes" : "no"}`)
   if (todoistSecret) {
