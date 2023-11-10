@@ -3,7 +3,6 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
-import prefetch from "@astrojs/prefetch";
 import sitemap from "@astrojs/sitemap";
 
 let site = ""
@@ -20,13 +19,16 @@ export default defineConfig({
   adapter: cloudflare({
     mode: "directory",
   }),
+  prefetch: {
+    defaultStrategy: "hover",
+    prefetchAll: true,
+  },
   integrations: [
     tailwind({
       config: {
         applyBaseStyles: false,
       },
     }),
-    prefetch({ throttle: 3 }),
     sitemap(),
   ],
 });

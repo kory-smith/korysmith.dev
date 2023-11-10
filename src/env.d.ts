@@ -1,3 +1,4 @@
+/// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
 import type { renderUniqueStylesheet } from "astro/runtime/server/index.js";
