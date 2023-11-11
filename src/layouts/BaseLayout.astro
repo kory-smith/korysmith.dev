@@ -11,13 +11,18 @@ interface Props {
 const { title, description } = Astro.props;
 
 const isHomepage = Astro.url.pathname === "/";
-
 const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+
+    {
+      process.env.ENVIRONMENT !== "production" && (
+        <meta name="robots" content="noindex,nofollow" />
+      )
+    }
 
     <link
       href="/k-light-mode.png"
