@@ -24,7 +24,7 @@ const canonicalURL = new URL(Astro.url.pathname, new URL("https://korysmith.dev"
     <meta charset="utf-8" />
 
     {!isProd && <meta name="robots" content="noindex,nofollow" />}
-
+    {!isProd && <link rel="sitemap" href="/sitemap-index.xml" />}
     {!isProd && <link rel="canonical" href={canonicalURL}/>}
 
     <link
@@ -37,8 +37,6 @@ const canonicalURL = new URL(Astro.url.pathname, new URL("https://korysmith.dev"
       rel="icon"
       media="(prefers-color-scheme: dark)"
     />
-
-    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:image" content="/og-k.png" />
     <meta name="viewport" content="width=device-width" />
