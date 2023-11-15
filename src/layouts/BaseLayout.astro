@@ -13,7 +13,7 @@ const { title, description } = Astro.props;
 const isHomepage = Astro.url.pathname === "/";
 const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
 
-const isProd = process.env.ENVIRONMENT !== "production";
+const isProd = process.env.ENVIRONMENT === "production";
 
 // Always canonical to production
 const canonicalURL = new URL(Astro.url.pathname, new URL("https://korysmith.dev"));
@@ -23,7 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, new URL("https://korysmith.dev"
   <head>
     <meta charset="utf-8" />
 
-    {isProd && <meta name="robots" content="noindex,nofollow" />}
+    {!isProd && <meta name="robots" content="noindex,nofollow" />}
 
     {!isProd && <link rel="canonical" href={canonicalURL}/>}
 
