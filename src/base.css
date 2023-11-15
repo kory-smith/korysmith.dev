@@ -233,9 +233,7 @@ code {
   word-wrap: normal;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  color: var(--color-primary-shade);
   font-size: 1em;
-  font-weight: 700;
   hyphens: none;
   tab-size: 2;
   text-align: left;
