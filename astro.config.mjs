@@ -4,7 +4,6 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import purgecss from "astro-purgecss";
 
 let site = "";
 const isProd = process.env.ENVIRONMENT === "production";
@@ -32,6 +31,5 @@ export default defineConfig({
       },
     }),
     isProd && sitemap(),
-    purgecss(),
   ],
 });
