@@ -5,12 +5,13 @@ import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 
-let site = ""
-if (process.env.ENVIRONMENT === "production") {
-  site = "https://korysmith.dev"
+let site = "";
+const isProd = process.env.ENVIRONMENT === "production";
+if (isProd) {
+  site = "https://korysmith.dev";
 } else {
-  site = "https://stage.korysmith.dev"
-} 
+  site = "https://stage.korysmith.dev";
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -29,6 +30,6 @@ export default defineConfig({
         applyBaseStyles: false,
       },
     }),
-    sitemap(),
+    isProd && sitemap(),
   ],
 });
