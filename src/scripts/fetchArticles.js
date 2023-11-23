@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import imageData from "../../public/images/imageData.json" assert { type: "json" };
+import { slugify } from "~/helpers/slugify";
 
 const NOTION_SECRET = process.env["PUBLIC_NOTION_SECRET"];
 const ARTICLES_DATABASE_ID = "bf7e16c44b7b46a6ac4d11d5d4db77d8";
@@ -78,12 +79,13 @@ async function fetchChildBlocksRecursively(blockId) {
 
   const list = [];
   for (const childBlock of childBlocks) {
+    const headerHelper = childBlock[childBlock.type]?.rich_text?.map(obj => obj.plain_text).join("")
     list.push({
       children: childBlock.has_children
         ? await fetchChildBlocksRecursively(childBlock.id)
         : null,
       type: childBlock.type,
-      headerHelper: childBlock[childBlock.type]?.rich_text?.[0]?.plain_text,
+      headerHelper: headerHelper && slugify(headerHelper),
       richText: childBlock[childBlock.type].rich_text,
       id: childBlock.id,
     });
