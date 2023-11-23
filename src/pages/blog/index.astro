@@ -8,11 +8,19 @@ const latestTen = articles.slice(0, 10);
 
 <BaseLayout title="Blog" description="All of Kory's blog posts">
   <h1>My Articles</h1>
-  {
-    latestTen.map((article) => (
-      <li>
-        <a href={article.slug}>{article.title}</a>
-      </li>
-    ))
-  }
+  <ul>
+    {
+      // The date stuff forces the published date into a "November 2023" format
+      latestTen.map((article) => (
+        <li>
+          <p>
+            <a href={article.slug}>{article.title}</a> ({new Intl.DateTimeFormat("en-US", {
+              month: "long",
+              year: "numeric",
+            }).format(new Date(article.publishedDate))})
+          </p>
+        </li>
+      ))
+    }
+  </ul>
 </BaseLayout>
