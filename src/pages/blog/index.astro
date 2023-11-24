@@ -3,7 +3,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { fetchArticlesWithStatus } from "@/scripts/fetchArticles";
 
 const articles = await fetchArticlesWithStatus("Published");
-const latestTen = articles.slice(0, 10);
+
+// Reverse the list so the most recent articles are at the top
+const latestTen = articles.slice(0, 10).reverse();
 ---
 
 <BaseLayout title="Blog" description="All of Kory's blog posts">
