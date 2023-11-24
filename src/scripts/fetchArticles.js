@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import imageData from "../../public/images/imageData.json" assert { type: "json" };
 import { slugify } from "~/helpers/slugify";
+import { getHighlighter } from "shiki";
 
 const NOTION_SECRET = process.env["PUBLIC_NOTION_SECRET"];
 const ARTICLES_DATABASE_ID = "bf7e16c44b7b46a6ac4d11d5d4db77d8";
@@ -119,7 +120,7 @@ function isHeading(block) {
  * @returns {string} The HTML content.
  */
 // Lord forgive me for writing this function
-const contentToHTML = (content) => {
+const contentToHTML = async (content) => {
   let html = "";
   let listHelper = false;
   for (const block of content) {
@@ -138,7 +139,19 @@ const contentToHTML = (content) => {
       html += wrapInTag(tag, innerHTML, [
         `id="${block.headerHelper.toLowerCase()}"`,
       ]);
-    } else if (block.type === "bulleted_list_item") {
+    } else if (block.type === "code") {
+
+      const highlighter = await getHighlighter({
+        theme: "dracula",
+        langs: ["javascript", "bash"]
+      })
+
+      html+= highlighter.codeToHtml(block.richText[0].plain_text, {
+        lang: "javascript",
+        theme: "dracula"
+      })
+    }
+     else if (block.type === "bulleted_list_item") {
       // If this is the first list item, start a new list and signal for later that we should close it
       if (!listHelper) {
         html += "<ul>";
@@ -146,14 +159,14 @@ const contentToHTML = (content) => {
         html += wrapInTag(tag, notionRichTextToHtml(block.richText));
         // Recursively do this for all children
         if (block.children) {
-          html += contentToHTML(block.children);
+          html += await contentToHTML(block.children);
         }
         listHelper = "ul";
       } else {
         const tag = createTag(block);
         html += wrapInTag(tag, notionRichTextToHtml(block.richText));
         if (block.children) {
-          html += contentToHTML(block.children);
+          html += await contentToHTML(block.children);
         }
       }
     } else if (block.type === "numbered_list_item") {
@@ -164,14 +177,14 @@ const contentToHTML = (content) => {
         html += wrapInTag(tag, notionRichTextToHtml(block.richText));
         // Recursively do this for all children
         if (block.children) {
-          html += contentToHTML(block.children);
+          html += await contentToHTML(block.children);
         }
         listHelper = "ol";
       } else {
         const tag = createTag(block);
         html += wrapInTag(tag, notionRichTextToHtml(block.richText));
         if (block.children) {
-          html += contentToHTML(block.children);
+          html += await contentToHTML(block.children);
         }
       }
     } else {
@@ -255,7 +268,7 @@ export async function fetchArticlesUsingCustomFilter(filter) {
     }
 
     const content = await fetchChildBlocksRecursively(article.id);
-    const parsedContent = contentToHTML(content);
+    const parsedContent = await contentToHTML(content);
     return {
       id: article.id,
       title,

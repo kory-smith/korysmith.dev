@@ -245,6 +245,23 @@ code {
   border: 1px solid #a8a8a8;
 }
 
+/* Let shiki do whatever it wants  */
+pre.shiki * {
+  word-wrap: initial;
+  box-decoration-break: initial;
+  -webkit-box-decoration-break: initial;
+  font-size: initial;
+  hyphens: initial;
+  tab-size: initial;
+  text-align: initial;
+  word-break: initial;
+  word-spacing: initial;
+  background-color: initial;
+  padding: initial;
+  border-radius: initial;
+  border: initial;
+}
+
 pre {
   -webkit-overflow-scrolling: touch;
   background: var(--color-dark);
