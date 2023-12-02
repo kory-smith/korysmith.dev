@@ -16,7 +16,10 @@ const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
 const isProd = process.env.ENVIRONMENT === "production";
 
 // Always canonical to production
-const canonicalURL = new URL(Astro.url.pathname, new URL("https://korysmith.dev"));
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  new URL("https://korysmith.dev")
+);
 ---
 
 <html lang="en">
@@ -24,8 +27,8 @@ const canonicalURL = new URL(Astro.url.pathname, new URL("https://korysmith.dev"
     <meta charset="utf-8" />
 
     {!isProd && <meta name="robots" content="noindex,nofollow" />}
-    {!isProd && <link rel="canonical" href={canonicalURL}/>}
-    
+    {!isProd && <link rel="canonical" href={canonicalURL} />}
+
     {isProd && <link rel="sitemap" href="/sitemap-index.xml" />}
 
     <link
@@ -55,7 +58,6 @@ const canonicalURL = new URL(Astro.url.pathname, new URL("https://korysmith.dev"
         document.querySelector("body")!.style.overflowY = "scroll";
       }
     </script>
-
   </head>
   <body>
     <Navigation />

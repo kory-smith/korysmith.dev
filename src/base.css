@@ -6,7 +6,7 @@
   --color-primary: #ffa500; /* Lovely orange */
   --color-primary-shade: #cc7900; /* Even darker shade of orange */
   --color-primary-glare: #ffc266; /* Even lighter shade of orange */
-  --color-visited: #551A8B;
+  --color-visited: #551a8b;
   --space-zero: clamp(0rem, -0.02rem + 0.11vw, 0.0625rem);
   --space-2xs: clamp(0.25rem, 0.16rem + 0.43vw, 0.5rem);
   --space-xs: clamp(0.75rem, 0.71rem + 0.22vw, 0.875rem);
@@ -32,7 +32,8 @@
   --size-step-3: clamp(1.6875rem, 1.51rem + 0.87vw, 2.1875rem);
   --size-step-4: clamp(2.0625rem, 1.85rem + 1.09vw, 2.6875rem);
   /* https://github.com/system-fonts/modern-font-stacks#neo-grotesque */
-  --font-base: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  --font-base: Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans",
+    Arial, sans-serif;
   --gutter: var(--space-s-m);
   --border-radius: 0.75rem;
   --border-radius-inner: 0.5rem;
