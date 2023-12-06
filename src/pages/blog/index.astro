@@ -5,7 +5,11 @@ import { fetchArticlesWithStatus } from "@/scripts/fetchArticles";
 const articles = await fetchArticlesWithStatus("Published");
 
 // Reverse the list so the most recent articles are at the top
-const latestTen = articles.slice(0, 10).reverse();
+const latestTen = articles.slice(0, 10).toSorted((a, b) => {
+  const dateA = new Date(a.publishedDate).getTime();
+  const dateB = new Date(b.publishedDate).getTime();
+  return dateA - dateB;
+});
 ---
 
 <BaseLayout title="Blog" description="All of Kory's blog posts">
