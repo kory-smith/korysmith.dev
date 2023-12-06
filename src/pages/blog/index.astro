@@ -8,7 +8,7 @@ const articles = await fetchArticlesWithStatus("Published");
 const latestTen = articles.slice(0, 10).toSorted((a, b) => {
   const dateA = new Date(a.publishedDate).getTime();
   const dateB = new Date(b.publishedDate).getTime();
-  return dateA - dateB;
+  return dateA + dateB;
 });
 ---
 
