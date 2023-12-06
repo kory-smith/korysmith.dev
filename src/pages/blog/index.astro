@@ -17,6 +17,7 @@ const latestTen = articles.slice(0, 10).toSorted((a, b) => {
   <ul>
     {
       // The date stuff forces the published date into a "November 2023" format
+      // prettier-ignore
       latestTen.map((article) => (
         <li>
           <p>
