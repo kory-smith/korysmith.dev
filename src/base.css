@@ -257,12 +257,14 @@ pre.shiki * {
   hyphens: initial;
   tab-size: initial;
   text-align: initial;
-  word-break: initial;
   word-spacing: initial;
   background-color: initial;
   padding: initial;
   border-radius: initial;
   border: initial;
+  /* Ensure code snippets don't overflow and create a horizontal scrollbar */
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 
 pre {
