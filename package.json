@@ -15,10 +15,10 @@
 		"subsetFonts": "find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/IBMPlexSans-Regular.ttf' --formats=woff2,woff && find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/IBMPlexSans-Bold.ttf' --formats=woff2,woff"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^7.6.4",
-		"@astrojs/sitemap": "^3.0.3",
-		"@astrojs/tailwind": "^5.0.2",
-		"astro": "^3.5.0",
+		"@astrojs/cloudflare": "^8.1.0",
+		"@astrojs/sitemap": "^3.0.5",
+		"@astrojs/tailwind": "^5.1.0",
+		"astro": "^4.2.0",
 		"sharp": "^0.32.6",
 		"shiki": "^0.14.5",
 		"tailwindcss": "^3.3.5"
