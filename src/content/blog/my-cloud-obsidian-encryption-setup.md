@@ -1,8 +1,15 @@
+---
+title: My Cloud Obsidian Encryption Setup (Using Node.js)
+description: Using Node.js and Google Drive to make a synced Obsidian journal that’s encrypted unless it’s actively being used.
+publishedDate: November 24, 2023
+status: published
+---
+
 # My Cloud Obsidian Encryption Setup (Using Node.js)
 
-Description: Using Node.js and Google Drive to make a synced Obsidian journal that’s encrypted unless it’s actively being used.
+Description:
 Last Edited Time: November 28, 2023 9:11 PM
-Published Date: November 24, 2023
+Published Date:
 Slug: my-cloud-obsidian-encryption-setup
 Status: Published
 
@@ -47,7 +54,7 @@ async function question(query) {
     output: process.stdout,
   });
 
-// Add a pretty console animation while text is input
+  // Add a pretty console animation while text is input
   rl._writeToOutput = function _writeToOutput() {
     rl.output.write(
       "\x1B[2K\x1B[200D" +
@@ -102,7 +109,9 @@ async function shell(cmd) {
   // Then, copy the encrypted vault back to Google Drive
   await shell(`cp "${LOCAL_ENCRYPTED_VAULT_PATH}" "${ENCRYPTED_VAULT_PATH}"`);
   // Make a backup, just in case
-  await shell(`cp "${LOCAL_ENCRYPTED_VAULT_PATH}" "${ENCRYPTED_VAULT_PATH}.backup"`);
+  await shell(
+    `cp "${LOCAL_ENCRYPTED_VAULT_PATH}" "${ENCRYPTED_VAULT_PATH}.backup"`
+  );
 
   // Then, delete the local unencrypted copy
   await shell(`rm -rf ${LOCAL_UNENCRYPTED_VAULT_PATH}/KorVault`);
@@ -153,17 +162,19 @@ If you are going to copy/paste my code, you’ll have to change a few things bef
 - The script assumes that there is already an encrypted copy of the vault at `ENCRYPTED_VAULT_PATH`. The first time you run the script, there won’t be. Run these lines of code (with the appropriate envvars) to put an encrypted copy where you want it:
 
 ```js
- await shell(
-    `tar -czf - -C ${LOCAL_UNENCRYPTED_VAULT_PATH} "KorVault" | openssl enc -aes-256-cbc -e -pbkdf2 -pass pass:${PASSWORD} -out ${LOCAL_ENCRYPTED_VAULT_PATH}`
-  );
+await shell(
+  `tar -czf - -C ${LOCAL_UNENCRYPTED_VAULT_PATH} "KorVault" | openssl enc -aes-256-cbc -e -pbkdf2 -pass pass:${PASSWORD} -out ${LOCAL_ENCRYPTED_VAULT_PATH}`
+);
 
-  // Then, copy the encrypted vault back to Google Drive
-  await shell(`cp "${LOCAL_ENCRYPTED_VAULT_PATH}" "${ENCRYPTED_VAULT_PATH}"`);
-  // Make a backup, just in case
-  await shell(`cp "${LOCAL_ENCRYPTED_VAULT_PATH}" "${ENCRYPTED_VAULT_PATH}.backup"`);
+// Then, copy the encrypted vault back to Google Drive
+await shell(`cp "${LOCAL_ENCRYPTED_VAULT_PATH}" "${ENCRYPTED_VAULT_PATH}"`);
+// Make a backup, just in case
+await shell(
+  `cp "${LOCAL_ENCRYPTED_VAULT_PATH}" "${ENCRYPTED_VAULT_PATH}.backup"`
+);
 
-  // Then, delete the local unencrypted copy
-  await shell(`rm -rf ${LOCAL_UNENCRYPTED_VAULT_PATH}/KorVault`);
+// Then, delete the local unencrypted copy
+await shell(`rm -rf ${LOCAL_UNENCRYPTED_VAULT_PATH}/KorVault`);
 ```
 
 - You might have noticed “KorVault” in this line: `await shell( tar -czf - -C ${LOCAL_UNENCRYPTED_VAULT_PATH} "KorVault" | openssl enc -aes-256-cbc -e -pbkdf2 -pass pass:${PASSWORD} -out ${LOCAL_ENCRYPTED_VAULT_PATH});`. That’s there because without it, `tar` was uploading /Users/kory/tmp/vault.tar.gz.enc instead of just vault.tar.gz.enc. Adding that extra string tells `tar` where to start from

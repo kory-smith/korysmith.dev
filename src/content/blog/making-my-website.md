@@ -1,10 +1,11 @@
+---
+title: Making My Website
+description: All the things that are cool about korysmith.dev.
+publishedDate: November 3, 2023
+status: published
+---
 # Making My Website
 
-Description: All the things that are cool about korysmith.dev.
-Last Edited Time: November 24, 2023 10:31 AM
-Published Date: November 3, 2023
-Slug: making-my-website
-Status: Published
 
 I made a website! This one! It’s not the first time I’ve had a website, but it is the first time I’ve had a website that I’m proud of and that’s mostly original.
 

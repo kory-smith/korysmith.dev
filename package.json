@@ -1,32 +1,26 @@
 {
-	"name": "korysmith.dev",
-	"author": "Kory Smith",
-	"type": "module",
-	"version": "1.0.0",
-	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"fetchImages": "node src/scripts/fetchImages.js",
-		"prebuild": "npm run fetchImages",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro",
-		"//subsetFonts": "This is the manual command I use to subset the font until I can get subfont to work",
-		"subsetFonts": "find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/IBMPlexSans-Regular.ttf' --formats=woff2,woff && find ./dist -type f -name '*.html' -print0 | xargs -0 glyphhanger --subset='./public/IBMPlexSans-Bold.ttf' --formats=woff2,woff"
-	},
-	"dependencies": {
-		"@astrojs/cloudflare": "^8.1.0",
-		"@astrojs/sitemap": "^3.0.5",
-		"@astrojs/tailwind": "^5.1.0",
-		"astro": "^4.2.0",
-		"sharp": "^0.32.6",
-		"shiki": "^0.14.5",
-		"tailwindcss": "^3.3.5"
-	},
-	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20231025.0",
-		"@notionhq/client": "^2.2.13",
-		"glyphhanger": "^5.0.0",
-		"typescript": "^5.2.2"
-	}
+  "name": "korysmith.dev",
+  "author": "Kory Smith",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^8.1.0",
+    "@astrojs/sitemap": "^3.0.5",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.2.0",
+    "shiki": "^0.14.5",
+    "tailwindcss": "^3.3.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231025.0",
+    "@notionhq/client": "^2.2.13",
+    "typescript": "^5.2.2"
+  }
 }

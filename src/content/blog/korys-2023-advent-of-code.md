@@ -1,10 +1,11 @@
+---
+title: Kory’s 2023 Advent of Code
+description: Kory Smith will do the 2023 Advent of Code or he will face public shame.
+publishedDate: December 5, 2023
+status: published
+---
 # Kory’s 2023 Advent of Code
 
-Description: Kory Smith will do the 2023 Advent of Code or he will face public shame.
-Last Edited Time: December 17, 2023 10:50 PM
-Published Date: December 5, 2023
-Slug: korys-2023-advent-of-code
-Status: Published
 
 I’ve never completed [Advent of Code](https://adventofcode.com/). Every year since 2019, I’ve started but never finished. I always get to the first *really* hard problem (usually on day 5) and stop.
 
