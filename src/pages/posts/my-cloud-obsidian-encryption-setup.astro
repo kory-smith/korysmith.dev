@@ -1,0 +1,12 @@
+---
+// Example: Filter out content entries with `draft: true`
+import { getCollection } from "astro:content";
+import BaseLayout from "~/src/layouts/BaseLayout.astro";
+const publishedBlogEntries = await getCollection("posts");
+const entry = publishedBlogEntries[0]
+
+const { Content, headings } = await entry.render();
+entry.data.publishedDate
+---
+
+<Content />

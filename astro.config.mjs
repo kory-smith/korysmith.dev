@@ -23,6 +23,9 @@ export default defineConfig({
   prefetch: {
     defaultStrategy: "hover",
     prefetchAll: true,
+    experimental: {
+      clientPrerender: true,
+    }
   },
   integrations: [
     tailwind({
@@ -32,4 +35,7 @@ export default defineConfig({
     }),
     isProd && sitemap(),
   ],
+  experimental: {
+    contentCollectionCache: true
+  },
 });
