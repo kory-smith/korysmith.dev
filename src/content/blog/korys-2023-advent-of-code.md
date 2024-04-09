@@ -1,7 +1,7 @@
 ---
 title: Kory’s 2023 Advent of Code
 description: Kory Smith will do the 2023 Advent of Code or he will face public shame.
-publishedDate: December 5, 2023
+publishedDate: 2023-12-05
 status: published
 ---
 # Kory’s 2023 Advent of Code

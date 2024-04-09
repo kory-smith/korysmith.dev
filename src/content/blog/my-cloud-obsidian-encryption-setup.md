@@ -1,7 +1,7 @@
 ---
 title: My Cloud Obsidian Encryption Setup (Using Node.js)
 description: Using Node.js and Google Drive to make a synced Obsidian journal that’s encrypted unless it’s actively being used.
-publishedDate: November 24, 2023
+publishedDate: 2023-11-24
 status: published
 ---
 
@@ -128,7 +128,7 @@ The script has a few problems.
 
 - ChatGPT warned me that it’s possible for a malicious program to spy on the system calls and grab the password as it’s being passed to `openssl` and `tar`
 - If you type the password wrong, it gets logged in plaintext to your console
-
+![example showing logged password in terminal](public/images/logged-password.png)
 - If you kill the terminal command with ^C, the unencrypted journal will chill on your local machine
 - Every time I run the journal command, the entire journal (around 100MB) gets reuploaded to Google Drive, which is pretty wasteful
 - It’s easy to get out of sync. For example, sometimes Google Drive is closed without me noticing it and the journal doesn’t get put into the cloud for a few days

@@ -1,11 +1,13 @@
 ---
 title: Making My Website
 description: All the things that are cool about korysmith.dev.
-publishedDate: November 3, 2023
+publishedDate: 2023-11-03
 status: published
 ---
 # Making My Website
 
+<!-- Below works with MDX -->
+<!-- published on {frontmatter.publishedDate} -->
 
 I made a website! This one! It’s not the first time I’ve had a website, but it is the first time I’ve had a website that I’m proud of and that’s mostly original.
 
@@ -40,7 +42,7 @@ I use [glyphhanger](https://github.com/filamentgroup/glyphhanger) to subset font
 
 For example, if I never use the “g” character, it won’t be included in the font file that’s shipped to your browser. You can see this in action if you inspect the fonts that load on the site. As of the publish date, I don’t use the capital D character, so it’s not included in the font file. You can tell because most of the characters don’t have serifs, but the D does.
 
-<!-- ![Untitled](Making%20My%20Website%207b1c68607de04d0b9af1135c106e0bf1/Untitled.png) -->
+![example of font subsetting](/public/images/subsetting.png)
 
 Right now, I have to run the subset command manually. There’s a plugin that does this automatically—[Subfont](https://github.com/Ernxst/subfont)—but it has a bug where it doesn’t work in Cloudflare Pages, which is where I host the site.
 
@@ -108,7 +110,7 @@ Note: As of publishing, this integration isn’t working—probably as a result 
 
 In creating the website, I learned that favicons can have media queries. So, my website has a light-mode favicon and a dark-mode favicon. I love it.
 
-<!-- ![Untitled](Making%20My%20Website%207b1c68607de04d0b9af1135c106e0bf1/Untitled%201.png) -->
+![dark and light mode favicons](/public/images/dark-light-favicon.png)
 
 ### It lazy loads images
 
