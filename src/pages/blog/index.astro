@@ -1,33 +1,15 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { fetchArticlesWithStatus } from "@/scripts/fetchArticles";
+import { getCollection } from "astro:content";
 
-const articles = await fetchArticlesWithStatus("Published");
-
-// Reverse the list so the most recent articles are at the top
-const latestTen = articles.slice(0, 10).toSorted((a, b) => {
-  const dateA = new Date(a.publishedDate).getTime();
-  const dateB = new Date(b.publishedDate).getTime();
-  return dateA + dateB;
-});
+const blog = await getCollection("blog");
 ---
 
 <BaseLayout title="Blog" description="All of Kory's blog posts">
   <h1>My Articles</h1>
   <ul>
-    {
-      // The date stuff forces the published date into a "November 2023" format
-      // prettier-ignore
-      latestTen.map((article) => (
-        <li>
-          <p>
-            <a href={article.slug}>{article.title}</a> ({new Intl.DateTimeFormat("en-US", {
-              month: "long",
-              year: "numeric",
-            }).format(new Date(article.publishedDate))})
-          </p>
-        </li>
-      ))
-    }
+    {blog.map(post => {
+      return <p>{post.data.title}</p>
+    })}
   </ul>
 </BaseLayout>

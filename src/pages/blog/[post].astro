@@ -3,24 +3,25 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blog");
-  return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  return blogEntries.map((entry) => {
+    return {
+      params: { post: entry.slug },
+      props: { entry },
+    };
+  });
 }
 
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { entry: post } = Astro.props;
+const { Content } = await post.render();
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description}>
-  <h1>{entry.data.title}</h1>
-  <!-- <p> -->
-    <!-- <i>
-      Published on <time style="display: inline">{article.publishedString}</time
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <!-- <p>
+  <i>
+      Published on <time style="display: inline">{post.data.publishedString}</time
       >
-    </i> -->
-  <!-- </p> -->
+    </i>
+  </p> -->
   <!-- {
     article.lastEditedString && (
       <i>

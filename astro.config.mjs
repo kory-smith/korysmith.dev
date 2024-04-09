@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
@@ -16,6 +16,9 @@ if (isProd) {
 // https://astro.build/config
 export default defineConfig({
   output: "hybrid",
+  image: {
+    service: passthroughImageService()
+  },
   site,
   adapter: cloudflare({
     mode: "directory",
