@@ -4,11 +4,13 @@ import { getCollection } from "astro:content";
 
 const blog = await getCollection("blog");
 // Most recent first
-const sortedBlog = blog.toSorted((a, b) => {
-  const aPublished = a.data.publishedDate;
-  const bPublished = b.data.publishedDate;
-  return aPublished > bPublished ? -1 : aPublished < bPublished ? 1 : 0;
-})
+const sortedBlog = blog
+  .filter((post) => post.data.status === "published")
+  .toSorted((a, b) => {
+    const aPublished = a.data.publishedDate as Date;
+    const bPublished = b.data.publishedDate as Date;
+    return aPublished > bPublished ? -1 : aPublished < bPublished ? 1 : 0;
+  });
 ---
 
 <BaseLayout title="Blog" description="All of Kory's blog posts">
@@ -16,9 +18,11 @@ const sortedBlog = blog.toSorted((a, b) => {
   <ul>
     {
       sortedBlog.map((post) => {
+        // publishedDate is always defined because these posts are published. TS just isn't smart enough.
+        const dateString = post.data.publishedDate!.toLocaleDateString();
         return (
           <li>
-            <a href={post.slug}>{post.data.title}</a>&nbsp;({post.data.publishedDate.toLocaleDateString()})
+            <a href={post.slug}>{post.data.title}</a> ({dateString})
           </li>
         );
       })
