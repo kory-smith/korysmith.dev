@@ -17,7 +17,7 @@ if (isProd) {
 export default defineConfig({
   output: "hybrid",
   image: {
-    service: passthroughImageService()
+    service: passthroughImageService(),
   },
   site,
   adapter: cloudflare({
@@ -28,6 +28,11 @@ export default defineConfig({
     prefetchAll: true,
     experimental: {
       clientPrerender: true,
+    },
+  },
+  markdown: {
+    shikiConfig: {
+      theme: "dracula"
     }
   },
   integrations: [
@@ -39,6 +44,6 @@ export default defineConfig({
     isProd && sitemap(),
   ],
   experimental: {
-    contentCollectionCache: true
+    contentCollectionCache: true,
   },
 });

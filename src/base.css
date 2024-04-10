@@ -249,7 +249,7 @@ code {
 }
 
 /* Let shiki do whatever it wants  */
-pre.shiki * {
+pre.astro-code * {
   word-wrap: initial;
   box-decoration-break: initial;
   -webkit-box-decoration-break: initial;
