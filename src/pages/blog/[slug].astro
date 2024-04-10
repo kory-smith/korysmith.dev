@@ -1,0 +1,34 @@
+---
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import { getCollection } from "astro:content";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog");
+  return blogEntries.map((entry) => {
+    return {
+      params: { slug: entry.slug },
+      props: { entry },
+    };
+  });
+}
+
+const { entry: post } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await post.render();
+
+const lastModified = new Date(
+  dayjs(remarkPluginFrontmatter.lastModified).utc() as any
+);
+---
+
+<ArticleLayout
+  title={post.data.title}
+  description={post.data.description}
+  publishedDate={post.data.publishedDate as Date}
+  lastUpdatedDate={lastModified}
+>
+  <Content />
+</ArticleLayout>

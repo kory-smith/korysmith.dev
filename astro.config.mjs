@@ -1,4 +1,5 @@
 import { defineConfig, passthroughImageService } from "astro/config";
+import { remarkModifiedTime } from "./plugins/remark-modified-time.mjs";
 
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
@@ -33,7 +34,8 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: "dracula"
-    }
+    },
+    remarkPlugins: [remarkModifiedTime],
   },
   integrations: [
     tailwind({

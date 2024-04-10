@@ -13,6 +13,8 @@ interface Props {
 }
 
 const { title, description, publishedDate, lastUpdatedDate } = Astro.props;
+
+const shouldShowLastUpdateDate = lastUpdatedDate && lastUpdatedDate > publishedDate;
 ---
 
 <html lang="en">
@@ -22,8 +24,8 @@ const { title, description, publishedDate, lastUpdatedDate } = Astro.props;
     <main id="main-content">
       <article class="wrapper region prose flow">
 				<h1>{title}</h1>
-				<p><i>Published on {publishedDate.toLocaleDateString()}</i></p>
-				{lastUpdatedDate && <p><i>Last updated on {lastUpdatedDate.toLocaleString()}</i></p>}
+				<h3><i>Published on <time class="inline">{publishedDate.toLocaleDateString()}</time></i></h3>
+				{shouldShowLastUpdateDate && <h3 class="my-0"><i>Last updated on <time class="inline">{lastUpdatedDate.toLocaleDateString()}</time></i></h3>}
         <slot />
       </article>
     </main>
