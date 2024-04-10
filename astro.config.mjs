@@ -36,7 +36,10 @@ export default defineConfig({
     shikiConfig: {
       theme: "dracula",
     },
-    remarkPlugins: [remarkModifiedTime, [externalLink, {domain: "korysmith.dev"}]],
+    remarkPlugins: [
+      remarkModifiedTime,
+      [externalLink, { domain: "korysmith.dev" }],
+    ],
   },
   integrations: [
     tailwind({

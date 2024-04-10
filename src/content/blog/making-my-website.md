@@ -4,19 +4,19 @@ description: All the things that are cool about korysmith.dev.
 publishedDate: 2023-11-03
 status: published
 ---
+
 <!-- Below works with MDX -->
 <!-- published on {frontmatter.publishedDate} -->
 
 I made a website! This one! It’s not the first time I’ve had a website, but it is the first time I’ve had a website that I’m proud of and that’s mostly original.
 
-You’ll note that I said *mostly* original. I got the design from [Andy Bell’s site](https://andy-bell.co.uk/). At first, I did this with glee—we programmers “borrow” code all the time, right? Then, I read this on his blog.
+You’ll note that I said _mostly_ original. I got the design from [Andy Bell’s site](https://andy-bell.co.uk/). At first, I did this with glee—we programmers “borrow” code all the time, right? Then, I read this on his blog.
 
 > The only thing that doesn’t feel safe is that the fellas (it’s always the fellas) love to rip off other peoples websites, which **is absolutely not cool**. The power play I have for that is no one is gonna want a site that looks like mine lmao.
-> 
 
-Whoops. Sorry, Andy. Maybe I can say it was *inspired by* Andy Bell?
+Whoops. Sorry, Andy. Maybe I can say it was _inspired by_ Andy Bell?
 
-Anyway, to celebrate the launching of the website, I wanted to write an article *about* the website.
+Anyway, to celebrate the launching of the website, I wanted to write an article _about_ the website.
 
 ## What’s cool about your website, Kory?
 
@@ -44,7 +44,7 @@ For example, if I never use the “g” character, it won’t be included in the
 
 Right now, I have to run the subset command manually. There’s a plugin that does this automatically—[Subfont](https://github.com/Ernxst/subfont)—but it has a bug where it doesn’t work in Cloudflare Pages, which is where I host the site.
 
-**Update 11/11/2023:** I switched to using system fonts picked out by [https://modernfontstacks.com/](https://modernfontstacks.com/) because my monkey brain couldn’t stop saying “but do you *need* those extra 16 kB of fonts?”
+**Update 11/11/2023:** I switched to using system fonts picked out by [https://modernfontstacks.com/](https://modernfontstacks.com/) because my monkey brain couldn’t stop saying “but do you _need_ those extra 16 kB of fonts?”
 
 ### It will never ever have CLS
 
@@ -66,7 +66,7 @@ It was around the time I made the Remix site that I joined Kroger’s web perfor
 2. Then, you have to parse it and turn it into machine code
 3. Then, you have to run it
 
-I quickly realized that there was no need to serve several hundred kB of JS just for a blog (*especially* not for a blog).
+I quickly realized that there was no need to serve several hundred kB of JS just for a blog (_especially_ not for a blog).
 
 Around the same time, I started to get interested in websites that focused heavily on simplicity—[Pinboard](https://pinboard.in/), for example. Astro was the new hotness at the time, so I decided to give that a try. It was also my excuse to learn about static-site generation (SSG) as opposed to the server-side rendering (SSR) I was more used to.
 

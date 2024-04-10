@@ -4,6 +4,7 @@ description: Using Node.js and Google Drive to make a synced Obsidian journal th
 publishedDate: 2023-11-24
 status: published
 ---
+
 A few months ago, I decided to start journaling. I wanted to journal to flex my writing muscles, and also to keep a log of the events and feelings of my days that I could look back on. I’d been wanting to try [Obsidian](https://obsidian.md/), and journaling seemed like a perfect opportunity to dive in.
 
 There was only one problem: I had multiple computers and wanted to use either one at any given time to journal. Which meant I wanted an up-to-date version of the journal on all computers at the same time. I also wanted to encrypt the journal at all times unless I was actively writing in it. The thought of the journal being out there in the open—either locally or in the cloud—bothered me.
@@ -125,7 +126,7 @@ The script has a few problems.
 
 - ChatGPT warned me that it’s possible for a malicious program to spy on the system calls and grab the password as it’s being passed to `openssl` and `tar`
 - If you type the password wrong, it gets logged in plaintext to your console
-![example showing logged password in terminal](public/images/logged-password.png)
+  ![example showing logged password in terminal](public/images/logged-password.png)
 - If you kill the terminal command with ^C, the unencrypted journal will chill on your local machine
 - Every time I run the journal command, the entire journal (around 100MB) gets reuploaded to Google Drive, which is pretty wasteful
 - It’s easy to get out of sync. For example, sometimes Google Drive is closed without me noticing it and the journal doesn’t get put into the cloud for a few days
