@@ -1,5 +1,6 @@
 import { defineConfig, passthroughImageService } from "astro/config";
 import { remarkModifiedTime } from "./plugins/remark-modified-time.mjs";
+import { externalLink } from "./plugins/remark-add-id-links.ts";
 
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
@@ -33,9 +34,9 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      theme: "dracula"
+      theme: "dracula",
     },
-    remarkPlugins: [remarkModifiedTime],
+    remarkPlugins: [remarkModifiedTime, [externalLink, {domain: "korysmith.dev"}]],
   },
   integrations: [
     tailwind({
