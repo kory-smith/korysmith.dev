@@ -24,8 +24,8 @@ const shouldShowLastUpdateDate = lastUpdatedDate && lastUpdatedDate > publishedD
     <main id="main-content">
       <article class="wrapper region prose flow">
 				<h1>{title}</h1>
-				<h3><i>Published on <time class="inline">{publishedDate.toLocaleDateString()}</time></i></h3>
-				{shouldShowLastUpdateDate && <h3 class="my-0"><i>Last updated on <time class="inline">{lastUpdatedDate.toLocaleDateString()}</time></i></h3>}
+				<p><i>Published on <time class="inline">{publishedDate.toLocaleDateString()}</time></i></p>
+				{shouldShowLastUpdateDate && <p style="margin-top: auto"><i>Last updated on <time class="inline">{lastUpdatedDate.toLocaleDateString()}</time></i></p>}
         <slot />
       </article>
     </main>
