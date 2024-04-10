@@ -3,62 +3,17 @@ import "@/base.css";
 
 import Navigation from "@/components/Navigation.astro";
 import Footer from "@/components/Footer.astro";
+import Head from "./Head.astro";
 
 interface Props {
   title: string;
   description: string;
 }
 const { title, description } = Astro.props;
-
-const isHomepage = Astro.url.pathname === "/";
-const titleWithSuffix = isHomepage ? title : `${title} | Kory Smith`;
-
-const isProd = process.env.ENVIRONMENT === "production";
-
-// Always canonical to production
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  new URL("https://korysmith.dev")
-);
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-
-    {!isProd && <meta name="robots" content="noindex,nofollow" />}
-    {!isProd && <link rel="canonical" href={canonicalURL} />}
-
-    {isProd && <link rel="sitemap" href="/sitemap-index.xml" />}
-
-    <link
-      href="/k-light-mode.png"
-      rel="icon"
-      media="(prefers-color-scheme: light)"
-    />
-    <link
-      href="/k-dark-mode.png"
-      rel="icon"
-      media="(prefers-color-scheme: dark)"
-    />
-
-    <meta property="og:image" content="/og-k.png" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
-
-    <title>{titleWithSuffix}</title>
-
-    <!-- https://caniuse.com/mdn-css_properties_scrollbar-gutter -->
-    <script async={true}>
-      if (
-        navigator.userAgent.includes("Safari") &&
-        !navigator.userAgent.includes("Chrome")
-      ) {
-        document.querySelector("body").style.overflowY = "scroll";
-      }
-    </script>
-  </head>
+  <Head title={title} description={description} />
   <body>
     <Navigation />
     <main id="main-content">
