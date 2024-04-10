@@ -1,0 +1,32 @@
+---
+import "@/base.css";
+
+import Navigation from "@/components/Navigation.astro";
+import Footer from "@/components/Footer.astro";
+import Head from "./Head.astro";
+
+interface Props {
+  title: string;
+  description: string;
+	publishedDate: Date;
+	lastUpdatedDate: Date
+}
+
+const { title, description, publishedDate, lastUpdatedDate } = Astro.props;
+---
+
+<html lang="en">
+  <Head title={title} description={description} />
+  <body>
+    <Navigation />
+    <main id="main-content">
+      <article class="wrapper region prose flow">
+				<h1>{title}</h1>
+				<p><i>Published on {publishedDate.toLocaleDateString()}</i></p>
+				{lastUpdatedDate && <p><i>Last updated on {lastUpdatedDate.toLocaleString()}</i></p>}
+        <slot />
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
