@@ -4,9 +4,6 @@ description: Using Node.js and Google Drive to make a synced Obsidian journal th
 publishedDate: 2023-11-24
 status: published
 ---
-
-# My Cloud Obsidian Encryption Setup (Using Node.js)
-
 A few months ago, I decided to start journaling. I wanted to journal to flex my writing muscles, and also to keep a log of the events and feelings of my days that I could look back on. I’d been wanting to try [Obsidian](https://obsidian.md/), and journaling seemed like a perfect opportunity to dive in.
 
 There was only one problem: I had multiple computers and wanted to use either one at any given time to journal. Which meant I wanted an up-to-date version of the journal on all computers at the same time. I also wanted to encrypt the journal at all times unless I was actively writing in it. The thought of the journal being out there in the open—either locally or in the cloud—bothered me.

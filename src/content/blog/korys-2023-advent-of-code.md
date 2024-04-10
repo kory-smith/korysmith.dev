@@ -4,9 +4,6 @@ description: Kory Smith will do the 2023 Advent of Code or he will face public s
 publishedDate: 2023-12-05
 status: published
 ---
-# Kory’s 2023 Advent of Code
-
-
 I’ve never completed [Advent of Code](https://adventofcode.com/). Every year since 2019, I’ve started but never finished. I always get to the first *really* hard problem (usually on day 5) and stop.
 
 I think that’s fine. Advent of Code is a lot like work, and I work enough. In fact, I hadn’t even considered doing Advent of Code this year until I told my good friend [Michael Richardson](https://twitter.com/AnAccidentalDev) that I was learning Rust and he asked, “*Are you doing Advent of Code in Rust?*”

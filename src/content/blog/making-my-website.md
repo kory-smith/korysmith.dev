@@ -4,8 +4,6 @@ description: All the things that are cool about korysmith.dev.
 publishedDate: 2023-11-03
 status: published
 ---
-# Making My Website
-
 <!-- Below works with MDX -->
 <!-- published on {frontmatter.publishedDate} -->
 
