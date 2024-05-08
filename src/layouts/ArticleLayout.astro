@@ -8,14 +8,14 @@ import Head from "./Head.astro";
 interface Props {
   title: string;
   description: string;
-  publishedDate: Date;
-  lastUpdatedDate: Date;
+  publishedDate?: Date;
+  lastUpdatedDate?: Date;
 }
 
 const { title, description, publishedDate, lastUpdatedDate } = Astro.props;
 
 const shouldShowLastUpdateDate =
-  lastUpdatedDate && lastUpdatedDate > publishedDate;
+  lastUpdatedDate && publishedDate && lastUpdatedDate > publishedDate;
 ---
 
 <html lang="en">
@@ -25,12 +25,16 @@ const shouldShowLastUpdateDate =
     <main id="main-content">
       <article class="wrapper region prose flow">
         <h1>{title}</h1>
-        <p>
-          <i
-            >Published on <time class="inline"
-              >{publishedDate.toLocaleDateString()}</time
-            ></i>
-        </p>
+        {
+          publishedDate && (
+            <p>
+              <i>
+                Published on{" "}
+                <time class="inline">{publishedDate.toLocaleDateString()}</time>
+              </i>
+            </p>
+          )
+        }
         {
           shouldShowLastUpdateDate && (
             <p style="margin-top: auto">
