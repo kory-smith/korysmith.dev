@@ -23,9 +23,7 @@ export default defineConfig({
     service: passthroughImageService(),
   },
   site,
-  adapter: cloudflare({
-    mode: "directory",
-  }),
+  adapter: cloudflare(),
   prefetch: {
     defaultStrategy: "hover",
     prefetchAll: true,
