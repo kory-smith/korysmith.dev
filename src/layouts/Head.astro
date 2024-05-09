@@ -45,7 +45,7 @@ const canonicalURL = new URL(
   <title>{titleWithSuffix}</title>
 
   <!-- https://caniuse.com/mdn-css_properties_scrollbar-gutter -->
-  <script async={true}>
+  <script is:inline async={true}>
     if (
       navigator.userAgent.includes("Safari") &&
       !navigator.userAgent.includes("Chrome")
