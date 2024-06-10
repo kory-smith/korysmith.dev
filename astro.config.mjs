@@ -1,6 +1,7 @@
 import { defineConfig, passthroughImageService } from "astro/config";
 import { remarkModifiedTime } from "./plugins/remark-modified-time.mjs";
-import { externalLink } from "./plugins/remark-add-id-links.ts";
+import { rehypeHeadingIds } from "@astrojs/markdown-remark";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
@@ -36,9 +37,21 @@ export default defineConfig({
     shikiConfig: {
       theme: "dracula",
     },
-    remarkPlugins: [
-      remarkModifiedTime,
-      [externalLink, { domain: "korysmith.dev" }],
+    remarkPlugins: [remarkModifiedTime],
+    rehypePlugins: [
+      rehypeHeadingIds,
+      [
+        // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          properties: undefined,
+          content: {
+            type: "text",
+            value: "#",
+          },
+        },
+      ],
     ],
   },
   integrations: [

@@ -1,16 +1,14 @@
-<!-- ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import { getEntry } from "astro:content";
 
-import { fetchArticlesWithName } from "@/scripts/fetchArticles";
-
-// Returns an array, even though we only get one article back
-const [ thingsIUseData ] = await fetchArticlesWithName("Things I use and love")
+const usesArticle = await getEntry("standalone", "uses");
+const { Content } = await usesArticle.render();
 ---
 
-<BaseLayout
-  title="Things Kory Uses (And Loves)"
-  description="Things Kory Uses (And Loves)"
+<ArticleLayout
+  title={usesArticle.data.title}
+  description={usesArticle.data.description}
 >
-  <h1>Things I Use (and Love)</h1>
-  <div class="flow" set:html={thingsIUseData.content} />
-</BaseLayout> -->
+  <Content />
+</ArticleLayout>

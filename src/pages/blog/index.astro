@@ -18,11 +18,10 @@ const sortedBlog = blog
   <ul>
     {
       sortedBlog.map((post) => {
-        // publishedDate is always defined because these posts are published. TS just isn't smart enough.
-        const dateString = post.data.publishedDate!.toLocaleDateString();
+        const date = post.data.publishedDate!.toLocaleDateString();
         return (
           <li>
-            <a href={post.slug}>{post.data.title}</a> ({dateString})
+            <a href={post.slug}>{post.data.title}</a> ({date})
           </li>
         );
       })
