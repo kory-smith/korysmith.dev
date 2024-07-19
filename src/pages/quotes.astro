@@ -1,0 +1,11 @@
+---
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import { getEntry } from "astro:content";
+
+const quotes = await getEntry("standalone", "quotes");
+const { Content } = await quotes.render();
+---
+
+<ArticleLayout title={quotes.data.title} description={quotes.data.description}>
+  <Content />
+</ArticleLayout>
