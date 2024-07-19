@@ -12,10 +12,7 @@ interface Props {
   lastUpdatedDate?: Date;
 }
 
-const { title, description, publishedDate, lastUpdatedDate } = Astro.props;
-
-const shouldShowLastUpdateDate =
-  lastUpdatedDate && publishedDate && lastUpdatedDate > publishedDate;
+const { title, description, publishedDate } = Astro.props;
 ---
 
 <html lang="en">
@@ -31,18 +28,6 @@ const shouldShowLastUpdateDate =
               <i>
                 Published on{" "}
                 <time class="inline">{publishedDate.toLocaleDateString()}</time>
-              </i>
-            </p>
-          )
-        }
-        {
-          shouldShowLastUpdateDate && (
-            <p style="margin-top: auto">
-              <i>
-                Last updated on{" "}
-                <time class="inline">
-                  {lastUpdatedDate.toLocaleDateString()}
-                </time>
               </i>
             </p>
           )
