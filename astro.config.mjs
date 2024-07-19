@@ -20,7 +20,7 @@ if (isProd) {
 export default defineConfig({
   output: "hybrid",
   site,
-  adapter: cloudflare({ imageService: "cloudflare" }),
+  adapter: cloudflare({ imageService: "passthrough" }),
   prefetch: {
     defaultStrategy: "hover",
     prefetchAll: true,
