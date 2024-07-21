@@ -19,8 +19,11 @@ if (isProd) {
 // https://astro.build/config
 export default defineConfig({
   output: "hybrid",
+  adapter: {
+    imageService: passthroughImageService,
+  },
   site,
-  adapter: cloudflare({ imageService: "passthrough" }),
+  adapter: cloudflare(),
   prefetch: {
     defaultStrategy: "hover",
     prefetchAll: true,
