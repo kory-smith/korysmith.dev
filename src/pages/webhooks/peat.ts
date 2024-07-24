@@ -32,25 +32,20 @@ export async function POST({
     if (generatedHmac !== expectedHmac) {
       return new Response("Signature mismatch", { status: 401 });
     }
-    const myHeaders = new Headers();
-    myHeaders.append("Accept", "application/vnd.github.v3+json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${locals.runtime.env.GITHUB_TOKEN}`
-    );
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("User-Agent", "korysmith.dev");
-    const body = JSON.stringify({
-      event_type: "Automatic trigger from korysmith.dev webhook",
-    });
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body,
-    };
     const peatDispatch = await fetch(
       "https://api.github.com/repos/kory-smith/peat/dispatches",
-      requestOptions
+      {
+        method: "POST",
+        headers: new Headers({
+          Accept: "application/vnd.github.v3+json",
+          Authorization: `Bearer ${locals.runtime.env.GITHUB_TOKEN}`,
+          "Content-Type": "application/json",
+          "User-Agent": "korysmith.dev",
+        }),
+        body: JSON.stringify({
+          event_type: "Automatic trigger from korysmith.dev webhook",
+        }),
+      }
     );
     if (peatDispatch.status === 204) {
       return new Response("succeeded", { status: 200 });
