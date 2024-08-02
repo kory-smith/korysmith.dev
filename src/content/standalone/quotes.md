@@ -180,3 +180,9 @@ I've been thinking of this as **it's only thinking about the work that's painful
 > Slow is smooth. Smooth is fast.
 >
 > - Old military saying
+
+---
+
+> Whoever has the most fun, wins
+>
+> - Unsure of original author, but I first heard it from [this Tweet](https://x.com/adityarao310/status/1801117295537992001).
