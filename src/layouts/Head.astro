@@ -43,14 +43,4 @@ const canonicalURL = new URL(
   <meta name="description" content={description} />
 
   <title>{titleWithSuffix}</title>
-
-  <!-- https://caniuse.com/mdn-css_properties_scrollbar-gutter -->
-  <script is:inline async={true}>
-    if (
-      navigator.userAgent.includes("Safari") &&
-      !navigator.userAgent.includes("Chrome")
-    ) {
-      document.querySelector("body").style.overflowY = "scroll";
-    }
-  </script>
 </head>
