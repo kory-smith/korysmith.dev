@@ -14,6 +14,7 @@ type PROD_ENV = {
   PUBLIC_NOTION_SECRET: string;
   TODOIST_AUTO_LABEL_SECRET: string;
   TODOIST_CLIENT_SECRET: string;
+  TOGGL_ASANA_SCRIPT_URL: string;
 };
 
 type STAGE_ENV = {
@@ -22,6 +23,7 @@ type STAGE_ENV = {
   OPENAI_API_KEY: string;
   PUBLIC_NOTION_SECRET: string;
   TODOIST_CLIENT_SECRET: string;
+  TOGGL_ASANA_SCRIPT_URL: string;
 };
 
 type Runtime = import("@astrojs/cloudflare").DirectoryRuntime<ENV>;
