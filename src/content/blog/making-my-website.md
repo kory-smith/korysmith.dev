@@ -20,6 +20,10 @@ I’m glad you asked.
 
 ### It uses Notion as a CMS
 
+**Update 11/29/2025:** This is no longer true! The site now uses plain Markdown using <a href="https://docs.astro.build/en/guides/content-collections/">Astro's content collections</a>. Even if I did use Notion as a database, I'd use the community-built <a href="https://astro.build/blog/community-loaders/#notion">Astro Notion loader</a> instead of my cobbled-together code. I'm glad I wrote it, though.
+
+#### The original content is below for posterity
+
 Almost all of the content for the site lives in a Notion database. The Notion content gets transformed into HTML with a roughshod transpiler I wrote myself!
 
 The coolest part is that it handles images too. The transpiler uses [sharp](https://sharp.pixelplumbing.com/) to create an avif, webp, and jpeg of each image and serves them up in a `picture` component. Sharp also optimizes the images to 50% quality. That part could use some tweaking—I bet I can get even smaller filesizes without a noticeable decrease in quality.
@@ -27,7 +31,7 @@ The coolest part is that it handles images too. The transpiler uses [sharp](http
 Other things the Notion parser does:
 
 - Adds # links (called [fragment identifiers](https://www.w3.org/DesignIssues/Fragment.html)) to headers
-- Adds a “date published” and “last edited date” to articles
+- Adds a "date published" and "last edited date" to articles
 - Adds rel=external to all external links
 
 ### It only ships the font characters that appears on the site
@@ -41,6 +45,8 @@ For example, if I never use the “g” character, it won’t be included in the
 Right now, I have to run the subset command manually. There’s a plugin that does this automatically—[Subfont](https://github.com/Ernxst/subfont)—but it has a bug where it doesn’t work in Cloudflare Pages, which is where I host the site.
 
 **Update 11/11/2023:** I switched to using system fonts picked out by [https://modernfontstacks.com/](https://modernfontstacks.com/) because my monkey brain couldn’t stop saying “but do you _need_ those extra 16 kB of fonts?”
+
+**Update 11/29/2025**: This is no longer true, either. I decided I don't mind the kBs. I'm using good 'ol Google fonts now.
 
 ### It will never ever have CLS
 
@@ -79,6 +85,8 @@ Now, if you hover over any of my navigation links, the browser will prefetch all
 I have some plans in the future to upgrade the prefetching. Chrome now has a prefetch API called [SpeculationRules](https://developer.chrome.com/blog/prerender-pages/). I plan to upgrade the site soon to use SpeculationRules if I detect a Chrome browser, and to keep using fetch if not.
 
 This prefetching is also the only part of the site that uses JavaScript.
+
+**Update 11/29/2025:** That's not true anymore. Off the top of my head, I added a copy button to my code blocks that uses JavaScript.
 
 I know that a static-generated website is plenty performant on its own, but I get a lot of joy from squeezing the site to as small as it can get.
 
