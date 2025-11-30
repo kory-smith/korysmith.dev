@@ -10,11 +10,7 @@ status: published
 
 I made a website! This one! It’s not the first time I’ve had a website, but it is the first time I’ve had a website that I’m proud of and that’s mostly original.
 
-You’ll note that I said _mostly_ original. I got the design from [Andy Bell’s site](https://andy-bell.co.uk/). At first, I did this with glee—we programmers “borrow” code all the time, right? Then, I read this on his blog.
-
-> The only thing that doesn’t feel safe is that the fellas (it’s always the fellas) love to rip off other peoples websites, which **is absolutely not cool**. The power play I have for that is no one is gonna want a site that looks like mine lmao.
-
-Whoops. Sorry, Andy. Maybe I can say it was _inspired by_ Andy Bell?
+You’ll note that I said _mostly_ original. I got the design from [Andy Bell’s site](https://andy-bell.co.uk/). At first, I outright stole it. But then, it turned into its own thing. Thanks, Andy.
 
 Anyway, to celebrate the launching of the website, I wanted to write an article _about_ the website.
 
