@@ -122,7 +122,7 @@ const quotes = [
   },
   {
     quote:
-      "Procrastination expert Rita Emmett explains: “The dread of doing a task uses up more time and energy than doing the task itself.”",
+      "The dread of doing a task uses up more time and energy than doing the task itself.",
     author: "Barbara Oakley",
     id: "dread-of-doing-a-task",
   },
@@ -159,7 +159,7 @@ const quotes = [
     id: "slow-is-smooth",
   },
   {
-   quote: "Whoever has the most fun, wins.",
+    quote: "Whoever has the most fun, wins.",
     author: "Unknown",
     id: "most-fun-wins",
   },
@@ -169,17 +169,20 @@ const quotes = [
     id: "shared-joy-and-sorrow",
   },
   {
-    quote: "Every first draft is perfect because all the first draft has to do is exist.",
+    quote:
+      "Every first draft is perfect because all the first draft has to do is exist.",
     author: "Jane Smiley",
     id: "first-draft-perfect",
   },
   {
-    quote: "You think your pain and your heartbreak are unprecedented in the history of the world, but then you read.",
+    quote:
+      "You think your pain and your heartbreak are unprecedented in the history of the world, but then you read.",
     author: "James Baldwin",
     id: "but-then-you-read",
   },
   {
-    quote: "Karma is the beginning of knowledge. Next is patience. Patience is very important. The strong are the patient ones, Anjin-san. patience means holding back your inclination to the seven emotions: hate, adoration, joy, anxiety, anger, grief, fear. If you don't give way to the seven, you're patient, then you'll soon understand all manner of things and be in harmony with Eternity.",
+    quote:
+      "Karma is the beginning of knowledge. Next is patience. Patience is very important. The strong are the patient ones, Anjin-san. patience means holding back your inclination to the seven emotions: hate, adoration, joy, anxiety, anger, grief, fear. If you don't give way to the seven, you're patient, then you'll soon understand all manner of things and be in harmony with Eternity.",
     author: "James Clavell, Shōgun",
     id: "patience-shogun",
   },
@@ -189,39 +192,124 @@ const quotes = [
     id: "dont-borrow-grief",
   },
   {
-    quote: `There exists in such a case a certain institution or law; let us say, for the sake of simplicity, a fence or gate erected across a road. The more modern type of reformer goes gaily up to it and says, “I don’t see the use of this; let us clear it away.” To which the more intelligent type of reformer will do well to answer: “If you don’t see the use of it, I certainly won’t let you clear it away. Go away and think. Then, when you can come back and tell me that you do see the use of it, I may allow you to destroy it.”`,
+    quote: `There exists in such a case a certain institution or law; let us say, for the sake of simplicity, a fence or gate erected across a road. The more modern type of reformer goes gaily up to it and says, "I don't see the use of this; let us clear it away." To which the more intelligent type of reformer will do well to answer: "If you don't see the use of it, I certainly won't let you clear it away. Go away and think. Then, when you can come back and tell me that you do see the use of it, I may allow you to destroy it."`,
     author: "G.K. Chesterton",
-    id: "chestertons-fence"
+    id: "chestertons-fence",
   },
   {
     quote: `How do you eat an elephant? One bite at a time.`,
     author: "Often attributed to Desmond Tutu",
-    id: "eat-an-elephant"
+    id: "eat-an-elephant",
   },
   {
     quote: `If a friend of mine gave a feast, and did not invite me to it, I should not mind a bit. but if a friend of mine had a sorrow and refused to allow me to share it, I should feel it most bitterly.`,
     author: "Oscar Wilde",
-    id: "share-sorrow"
+    id: "share-sorrow",
   },
 ];
 ---
 
 <ArticleLayout title="Quotes" description="Quotes that Kory likes and lives by">
-  <p>
-    Quotes that shape my thinking and that I live by.
+  <p class="quotes-intro">Quotes that shape my thinking and that I live by.</p>
+  <div class="quotes-list">
     {
       quotes.map((quote) => {
         return (
-          <div id={quote.id} class="flex justify-between">
+          <article class="quote-card" id={quote.id}>
             <blockquote>
               {quote.quote}
-              <p>- {quote.author}</p>
+              <cite>— {quote.author}</cite>
             </blockquote>
-            <a href={`#${quote.id}`}>#</a>
-          </div>
-            <hr />
+            <a
+              href={`#${quote.id}`}
+              class="quote-anchor"
+              aria-label={`Link to quote by ${quote.author}`}
+            >
+              #
+            </a>
+          </article>
         );
       })
     }
-  </p>
+  </div>
 </ArticleLayout>
+
+<style>
+  .quotes-intro {
+    margin-bottom: var(--space-xl);
+  }
+
+  .quotes-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .quote-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-l);
+    align-items: start;
+    padding: var(--space-m) 0;
+    border-bottom: 1px solid var(--color-mid-glare);
+  }
+
+  .quote-card:last-child {
+    border-bottom: none;
+  }
+
+  .quote-card blockquote {
+    margin: 0;
+    padding-inline-start: 1.25em;
+    border-inline-start: 3px solid var(--color-primary);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: var(--color-dark);
+    max-width: none;
+  }
+
+  .quote-card cite {
+    display: block;
+    margin-top: var(--space-s);
+    font-size: 0.9em;
+    font-style: normal;
+    color: var(--color-mid);
+  }
+
+  .quote-anchor {
+    font-family: var(--font-base);
+    font-size: 0.875rem;
+    color: var(--color-mid-glare);
+    text-decoration: none;
+    padding: 0.25em 0.5em;
+    line-height: 1;
+    border-radius: 4px;
+    transition:
+      color var(--transition-movement),
+      background var(--transition-movement);
+    flex-shrink: 0;
+    align-self: start;
+  }
+
+  .quote-anchor::after {
+    display: none;
+  }
+
+  .quote-anchor:hover {
+    color: var(--color-primary);
+    background: var(--color-warm-white);
+  }
+
+  .quote-card:target {
+    background: var(--color-warm-white);
+    margin-inline: calc(var(--space-m) * -1);
+    padding-inline: var(--space-m);
+    border-radius: var(--border-radius);
+  }
+
+  .quote-card:target .quote-anchor {
+    color: var(--color-primary);
+  }
+</style>
