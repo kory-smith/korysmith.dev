@@ -2,22 +2,55 @@
 
 ---
 
-<footer
-  role="contentinfo"
-  class="wrapper repel text-step-0 pt-s pb-m items-end"
->
-  <div class="flow">
+<footer role="contentinfo">
+  <div class="wrapper footer-content">
     <nav aria-label="secondary navigation">
-      <ul role="list" class="cluster text-step-0">
+      <ul role="list" class="cluster">
         <li>
           <a href="/uses/">Things I Use</a>
         </li>
         <li>
-          <a href="https://github.com/kory-smith/korysmith.dev" rel="external"
-            >View Source</a
-          >
+          <a href="https://github.com/kory-smith/korysmith.dev" rel="external">
+            View Source
+          </a>
         </li>
       </ul>
     </nav>
   </div>
 </footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--color-mid-glare);
+    margin-top: auto;
+    padding-block: var(--space-l);
+  }
+
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-m);
+  }
+
+  footer ul {
+    gap: var(--space-m);
+  }
+
+  footer a {
+    font-size: var(--size-step-0);
+    color: var(--color-mid);
+    transition: color var(--transition-movement);
+  }
+
+  footer a:hover {
+    color: var(--color-dark);
+  }
+
+  footer a::after {
+    height: 1px;
+    background: var(--color-mid);
+  }
+
+</style>

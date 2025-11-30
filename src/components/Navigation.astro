@@ -4,7 +4,7 @@
 
 <header class="site-header">
   <div class="wrapper repel">
-    <a class="site-header__brand" href="/">
+    <a class="site-header__brand no-underline" href="/">
       <img
         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAGlJREFUWEftl9EKABAMRfnZfdR+lvcpa01GHa+S03G56a149OL92wIgImMHpapb6Oh6ADCAgf8NRO+9fWPSBgC4bsArL68r0hkAoNyAPePrIQTgOQM2lNFMpLsAAAxg4LgBr2xOz5f/jiczr9Ahlc1SawAAAABJRU5ErkJggg=="
         alt="Pixellated K in grey"
@@ -12,14 +12,52 @@
         width="32"
         height="32"
       />
-      <nav class="menu cluster text-base">
-        <ul class="cluster text-base">
-          <a href="/"><li>Home</li></a>
-          <a href="/blog/"><li>Blog</li></a>
-          <a href="/about/"><li>About</li></a>
-          <a href="/quotes/"><li>Quotes</li></a>
-        </ul>
-      </nav>
     </a>
+    <nav class="site-nav">
+      <ul class="cluster text-base" role="list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/quotes/">Quotes</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
+
+<style>
+  .site-header {
+    padding-block: var(--space-m);
+  }
+
+  .site-header__brand {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-header__brand img {
+    transition: transform var(--transition-bounce);
+  }
+
+  .site-header__brand:hover img {
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  .site-nav ul {
+    gap: var(--space-m);
+  }
+
+  .site-nav a {
+    font-weight: 500;
+    padding: 0.25em 0;
+  }
+
+  .site-nav a::after {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+
+  .site-nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+</style>

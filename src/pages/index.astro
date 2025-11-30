@@ -3,9 +3,218 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Kory Smith" description="Kory's homepage">
-  <h1>Kory Smith's Website</h1>
-  <p>
-    This is my place to write, learn, experiment, and hang out; my cozy home on
-    the internet. Welcome!
-  </p>
+  <div class="hero">
+    <div class="hero__logo" aria-hidden="true">
+      <div class="pixel-k">
+        <div class="pixel-row">
+          <span></span><span></span><span class="filled"></span><span
+          ></span><span></span><span></span><span class="filled"></span><span
+          ></span>
+        </div>
+        <div class="pixel-row">
+          <span></span><span></span><span class="filled"></span><span
+          ></span><span></span><span class="filled"></span><span></span><span
+          ></span>
+        </div>
+        <div class="pixel-row">
+          <span></span><span></span><span class="filled"></span><span
+          ></span><span class="filled"></span><span></span><span></span><span
+          ></span>
+        </div>
+        <div class="pixel-row">
+          <span></span><span></span><span class="filled"></span><span
+            class="filled"></span><span></span><span></span><span></span><span
+          ></span>
+        </div>
+        <div class="pixel-row">
+          <span></span><span></span><span class="filled"></span><span
+          ></span><span class="filled"></span><span></span><span></span><span
+          ></span>
+        </div>
+        <div class="pixel-row">
+          <span></span><span></span><span class="filled"></span><span
+          ></span><span></span><span class="filled"></span><span></span><span
+          ></span>
+        </div>
+        <div class="pixel-row">
+          <span></span><span></span><span class="filled"></span><span
+          ></span><span></span><span></span><span class="filled"></span><span
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="hero__content">
+      <h1>Kory Smith's Website</h1>
+      <p>
+        This is my place to write, learn, experiment, and hang out: my cozy home
+        on the internet. Welcome!
+      </p>
+      <nav class="hero__links">
+        <a href="/blog/" class="hero__link">Read the blog</a>
+        <a href="/about/" class="hero__link hero__link--secondary">About me</a>
+      </nav>
+    </div>
+  </div>
 </BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+    min-height: 60vh;
+    padding-block: var(--space-xl);
+  }
+
+  @media (min-width: 50em) {
+    .hero {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  .hero__logo {
+    justify-self: center;
+    animation: logoFloat 6s ease-in-out infinite;
+  }
+
+  @media (min-width: 50em) {
+    .hero__logo {
+      justify-self: end;
+    }
+  }
+
+  @keyframes logoFloat {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(2deg);
+    }
+  }
+
+  .pixel-k {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--space-m);
+    background: linear-gradient(
+      135deg,
+      var(--color-warm-white) 0%,
+      var(--color-cream) 100%
+    );
+    border-radius: var(--border-radius);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.08),
+      0 0 0 1px var(--color-mid-glare);
+  }
+
+  .pixel-row {
+    display: flex;
+    gap: 4px;
+  }
+
+  .pixel-row span {
+    width: 12px;
+    height: 12px;
+    background: var(--color-cream);
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .pixel-row span.filled {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-primary-shade) 100%
+    );
+    box-shadow: 0 2px 4px rgba(224, 123, 57, 0.3);
+  }
+
+  .pixel-k:hover .pixel-row span.filled {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(224, 123, 57, 0.4);
+  }
+
+  @media (min-width: 50em) {
+    .pixel-row span {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .hero__content {
+    max-width: 32rem;
+  }
+
+  .hero__content h1 {
+    font-size: var(--size-step-5);
+    font-weight: 900;
+    margin-bottom: var(--space-xs);
+  }
+
+  .hero__tagline {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--color-mid);
+    font-size: var(--size-step-1);
+    margin-bottom: var(--space-m);
+  }
+
+  .hero__content > p:not(.hero__tagline) {
+    line-height: 1.7;
+  }
+
+  .hero__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-top: var(--space-l);
+  }
+
+  .hero__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.75em 1.5em;
+    font-weight: 600;
+    border-radius: var(--border-radius-inner);
+    transition:
+      transform var(--transition-bounce),
+      box-shadow var(--transition-movement),
+      background var(--transition-movement);
+  }
+
+  .hero__link::after {
+    display: none !important;
+  }
+
+  .hero__link:first-child {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-glare) 0%,
+      var(--color-primary) 100%
+    );
+    color: white;
+    box-shadow: 0 2px 8px rgba(224, 123, 57, 0.25);
+  }
+
+  .hero__link:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(224, 123, 57, 0.35);
+  }
+
+  .hero__link--secondary {
+    background: var(--color-warm-white);
+    border: 1px solid var(--color-mid-glare);
+    color: var(--color-dark);
+  }
+
+  .hero__link--secondary:hover {
+    background: var(--color-cream);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+</style>
