@@ -43,7 +43,9 @@ export default defineConfig({
         rehypeAutolinkHeadings,
         {
           behavior: "append",
-          properties: undefined,
+          properties: {
+            class: "heading-anchor",
+          },
           content: {
             type: "text",
             value: "#",
