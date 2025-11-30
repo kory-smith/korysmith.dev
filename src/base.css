@@ -460,12 +460,11 @@ button:active {
 
 .prose ul li::marker {
   color: var(--color-primary);
-  content: "→ ";
-  font-weight: 700;
+  font-size: 1.1em;
 }
 
 .prose ul li {
-  list-style-type: "→ ";
+  list-style-type: disc;
 }
 
 .prose :is(ol, ul) {
