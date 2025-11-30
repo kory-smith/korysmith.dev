@@ -40,7 +40,7 @@ I use [glyphhanger](https://github.com/filamentgroup/glyphhanger) to subset font
 
 For example, if I never use the “g” character, it won’t be included in the font file that’s shipped to your browser. You can see this in action if you inspect the fonts that load on the site. As of the publish date, I don’t use the capital D character, so it’s not included in the font file. You can tell because most of the characters don’t have serifs, but the D does.
 
-![example of font subsetting](/public/images/subsetting.png)
+![example of font subsetting](/images/subsetting.png)
 
 Right now, I have to run the subset command manually. There’s a plugin that does this automatically—[Subfont](https://github.com/Ernxst/subfont)—but it has a bug where it doesn’t work in Cloudflare Pages, which is where I host the site.
 
@@ -112,7 +112,7 @@ Note: As of publishing, this integration isn’t working—probably as a result 
 
 In creating the website, I learned that favicons can have media queries. So, my website has a light-mode favicon and a dark-mode favicon. I love it.
 
-![dark and light mode favicons](/public/images/dark-light-favicon.png)
+![dark and light mode favicons](/images/dark-light-favicon.png)
 
 ### It lazy loads images
 
