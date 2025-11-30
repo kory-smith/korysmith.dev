@@ -11,18 +11,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^11.0.4",
-    "@astrojs/sitemap": "^3.1.6",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.15.1",
+    "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/mdx": "^4.3.12",
+    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/postcss": "^4.1.17",
+    "astro": "^5.16.3",
     "rehype-autolink-headings": "^7.1.0",
-    "shiki": "^0.14.7",
-    "tailwindcss": "^3.4.10",
+    "shiki": "^3.17.0",
+    "tailwindcss": "^4.1.17",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240821.1",
-    "@notionhq/client": "^2.2.15",
-    "typescript": "^5.5.4"
+    "@cloudflare/workers-types": "^4.20251128.0",
+    "@notionhq/client": "^5.4.0",
+    "typescript": "^5.9.3"
   }
 }

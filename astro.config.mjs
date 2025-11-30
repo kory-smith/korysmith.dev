@@ -5,8 +5,8 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
-import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
+import mdx from "@astrojs/mdx";
 
 let site = "";
 const isProd = process.env.ENVIRONMENT === "production";
@@ -18,7 +18,7 @@ if (isProd) {
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
+  output: "server",
   adapter: {
     imageService: passthroughImageService,
   },
@@ -55,14 +55,7 @@ export default defineConfig({
     ],
   },
   integrations: [
-    tailwind({
-      config: {
-        applyBaseStyles: false,
-      },
-    }),
+    mdx(),
     isProd && sitemap(),
   ],
-  experimental: {
-    contentCollectionCache: true,
-  },
-});
+  });

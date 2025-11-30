@@ -1,9 +1,9 @@
 ---
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
-import { getEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
 
 const usesArticle = await getEntry("standalone", "uses");
-const { Content } = await usesArticle.render();
+const { Content } = await render(usesArticle!);
 ---
 
 <ArticleLayout

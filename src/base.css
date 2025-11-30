@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   /* Color palette - warm, sophisticated */
   --color-ink: #1a1715;
@@ -56,10 +58,6 @@
   --transition-fade: 200ms ease;
   --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   body {

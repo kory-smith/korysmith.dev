@@ -5,8 +5,12 @@ publishedDate: 2023-11-03
 status: published
 ---
 
-<!-- Below works with MDX -->
-<!-- published on {frontmatter.publishedDate} -->
+import { Image } from 'astro:assets';
+import subsettingImg from '../../../public/images/subsetting.png';
+import darkLightFaviconImg from '../../../public/images/dark-light-favicon.png';
+
+{/* Below works with MDX */}
+{/* published on {frontmatter.publishedDate} */}
 
 I made a website! This one! It’s not the first time I’ve had a website, but it is the first time I’ve had a website that I’m proud of and that’s mostly original.
 
@@ -40,7 +44,7 @@ I use [glyphhanger](https://github.com/filamentgroup/glyphhanger) to subset font
 
 For example, if I never use the “g” character, it won’t be included in the font file that’s shipped to your browser. You can see this in action if you inspect the fonts that load on the site. As of the publish date, I don’t use the capital D character, so it’s not included in the font file. You can tell because most of the characters don’t have serifs, but the D does.
 
-![example of font subsetting](/images/subsetting.png)
+<Image src={subsettingImg} alt="example of font subsetting" />
 
 Right now, I have to run the subset command manually. There’s a plugin that does this automatically—[Subfont](https://github.com/Ernxst/subfont)—but it has a bug where it doesn’t work in Cloudflare Pages, which is where I host the site.
 
@@ -112,11 +116,11 @@ Note: As of publishing, this integration isn’t working—probably as a result 
 
 In creating the website, I learned that favicons can have media queries. So, my website has a light-mode favicon and a dark-mode favicon. I love it.
 
-![dark and light mode favicons](/images/dark-light-favicon.png)
+<Image src={darkLightFaviconImg} alt="dark and light mode favicons" />
 
 ### It lazy loads images
 
-If you visit a page with images that are below the fold (such as [https://korysmith.dev/uses/](https://korysmith.dev/uses/)), the images won’t load until you’re about to scroll them into view. [This is a native web feature](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/loading).
+Images below the fold won't load until you're about to scroll them into view. The site uses [Astro's Image component](https://docs.astro.build/en/guides/images/) which automatically adds `loading="lazy"` and reserves space to prevent layout shift.
 
 ### It has a staging site
 
