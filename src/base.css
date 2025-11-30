@@ -342,6 +342,63 @@ pre code {
   background: none;
 }
 
+/* Code block copy button */
+.code-block-wrapper {
+  position: relative;
+}
+
+.copy-code-button {
+  position: absolute;
+  top: var(--space-m);
+  right: var(--space-m);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.35em 0.6em;
+  background: rgba(253, 251, 247, 0.1);
+  border: 1px solid rgba(253, 251, 247, 0.2);
+  border-radius: var(--border-radius-inner);
+  color: var(--color-cream);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  line-height: 1;
+  transition:
+    background-color var(--transition-movement),
+    border-color var(--transition-movement),
+    transform var(--transition-bounce);
+}
+
+.copy-code-button:hover {
+  background: rgba(253, 251, 247, 0.2);
+  transform: translateY(-1px);
+}
+
+.copy-code-button:active {
+  transform: translateY(0);
+}
+
+.copy-code-button.copied {
+  background: rgba(168, 216, 168, 0.25);
+  border-color: rgba(168, 216, 168, 0.4);
+}
+
+.copy-code-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.copy-code-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy-code-button {
+    transition: none;
+  }
+}
+
 /* Details/Summary */
 summary {
   align-items: baseline;
