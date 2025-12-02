@@ -1,0 +1,307 @@
+---
+// ChristmasLights.astro - Cozy fairy lights with a whimsical, gentle glow
+interface Props {
+  position?: 'top' | 'bottom';
+}
+const { position = 'top' } = Astro.props;
+
+// Check if it's Christmas season (server-side)
+const now = new Date();
+const month = now.getMonth();
+const day = now.getDate();
+const isChristmasSeason =
+  (month === 10 && day >= 27) || // Nov 27+
+  (month === 11) ||              // All of December
+  (month === 0 && day === 1);    // Jan 1
+
+// Classic Christmas colors
+const colors = ['red', 'green', 'blue', 'yellow', 'orange'];
+
+// Generate 24 lights for desktop (CSS will hide extras on smaller screens)
+const lights = Array.from({ length: 24 }).map((_, i) => ({
+  color: colors[i % colors.length],
+  delay: Math.random() * 4,
+  duration: 2.5 + Math.random() * 1.5,
+}));
+---
+
+{isChristmasSeason && (
+<div class={`fairy-lights fairy-lights-${position}`} data-christmas-lights>
+  <svg class="wire" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 4" preserveAspectRatio="none">
+    <path
+      d="M 0 2 Q 2.5 0.5, 5 2 T 10 2 T 15 2 T 20 2 T 25 2 T 30 2 T 35 2 T 40 2 T 45 2 T 50 2 T 55 2 T 60 2 T 65 2 T 70 2 T 75 2 T 80 2 T 85 2 T 90 2 T 95 2 T 100 2"
+      fill="none"
+      stroke="rgb(60, 50, 50)"
+      stroke-width="0.4"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+  <div class="lights-row">
+    {lights.map((light, i) => (
+      <div
+        class={`light light-${light.color}`}
+        style={`--delay: ${light.delay}s; --duration: ${light.duration}s;`}
+        data-index={i}
+      >
+        <div class="stem"></div>
+        <div class="bulb"></div>
+        <div class="glow"></div>
+      </div>
+    ))}
+  </div>
+</div>
+)}
+
+<style>
+  .fairy-lights {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 36px;
+    pointer-events: none;
+    z-index: 100;
+    overflow: visible;
+  }
+
+  .fairy-lights-top {
+    top: 0;
+  }
+
+  .fairy-lights-bottom {
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+
+  .wire {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+  }
+
+  .lights-row {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 0 3%;
+  }
+
+  .light {
+    position: relative;
+    width: 12px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .stem {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 4px;
+    background: rgb(60, 50, 50);
+  }
+
+  .bulb {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 10px;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    box-shadow:
+      inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+      0 1px 4px currentColor;
+    animation: bulb-pulse var(--duration, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  /* Tiny cap on top of bulb */
+  .bulb::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 3px;
+    background: rgb(70, 55, 55);
+    border-radius: 1px 1px 0 0;
+  }
+
+  /* Subtle highlight */
+  .bulb::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    width: 2px;
+    height: 3px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+    border-radius: 50%;
+  }
+
+  .glow {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.35;
+    filter: blur(6px);
+    animation: glow-pulse var(--duration, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  /* Classic Christmas colors */
+  .light-red {
+    color: #ff0000;
+  }
+  .light-red .bulb {
+    background: linear-gradient(145deg, #ff4444 0%, #cc0000 100%);
+  }
+
+  .light-green {
+    color: #00ff00;
+  }
+  .light-green .bulb {
+    background: linear-gradient(145deg, #44ff44 0%, #00cc00 100%);
+  }
+
+  .light-blue {
+    color: #4444ff;
+  }
+  .light-blue .bulb {
+    background: linear-gradient(145deg, #6666ff 0%, #0000cc 100%);
+  }
+
+  .light-yellow {
+    color: #ffff00;
+  }
+  .light-yellow .bulb {
+    background: linear-gradient(145deg, #ffff44 0%, #cccc00 100%);
+  }
+
+  .light-orange {
+    color: #ff8c00;
+  }
+  .light-orange .bulb {
+    background: linear-gradient(145deg, #ffaa44 0%, #cc6600 100%);
+  }
+
+  /* Gentle animations */
+  @keyframes glow-pulse {
+    0%, 100% {
+      opacity: 0.4;
+      transform: translateX(-50%) scale(1);
+    }
+    50% {
+      opacity: 0.2;
+      transform: translateX(-50%) scale(0.9);
+    }
+  }
+
+  @keyframes bulb-pulse {
+    0%, 100% {
+      box-shadow:
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+        0 1px 6px currentColor;
+    }
+    50% {
+      box-shadow:
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+        0 1px 2px currentColor;
+    }
+  }
+
+  /* Tablet: show 16 lights */
+  @media (max-width: 768px) {
+    .fairy-lights {
+      height: 30px;
+    }
+
+    .light {
+      width: 10px;
+      height: 16px;
+    }
+
+    .bulb {
+      width: 5px;
+      height: 8px;
+    }
+
+    .bulb::before {
+      width: 3px;
+      height: 2px;
+    }
+
+    .glow {
+      width: 12px;
+      height: 12px;
+      filter: blur(5px);
+    }
+
+    /* Hide every 3rd light to reduce from 24 to ~16 */
+    .light:nth-child(3n) {
+      display: none;
+    }
+  }
+
+  /* Mobile: show ~10 lights */
+  @media (max-width: 480px) {
+    .fairy-lights {
+      height: 26px;
+    }
+
+    .lights-row {
+      padding: 0 2%;
+    }
+
+    .light {
+      width: 8px;
+      height: 14px;
+    }
+
+    .stem {
+      height: 3px;
+    }
+
+    .bulb {
+      top: 3px;
+      width: 4px;
+      height: 7px;
+    }
+
+    .bulb::before {
+      width: 3px;
+      height: 2px;
+      top: -2px;
+    }
+
+    .glow {
+      top: 3px;
+      width: 10px;
+      height: 10px;
+      filter: blur(4px);
+      opacity: 0.3;
+    }
+
+    /* Hide more lights - show roughly every other one */
+    .light:nth-child(3n),
+    .light:nth-child(4n+2) {
+      display: none;
+    }
+  }
+</style>
